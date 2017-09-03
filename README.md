@@ -4,7 +4,7 @@
 ihope 由丐帮开发并维护。
 
 ## 用法
-### Node 环境：
+### Node 环境：
 安装：
 ```bash
 npm install ihope
@@ -27,8 +27,8 @@ I.do('My First Test', function(I){
 ```
 终端输出：
 
-### 浏览器环境
-用法：
+### 浏览器环境
+用法：
 ```html
 <html>
   <head>
