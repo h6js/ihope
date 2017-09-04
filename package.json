@@ -1,0 +1,10 @@
+{
+  "name": "ihope",
+  "version": "0.0.1",
+  "description": "JavaScript Testing Libaray",
+  "keywords": [ "ihope", "javascript", "test" ],
+  "license": "MIT",
+  "author": { "name": "leadzen", "email": "leadzen@qq.com" },
+  "files": [ "ihope.js", "README.md" ],
+  "main": "ihope.js"
+}

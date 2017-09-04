@@ -25,7 +25,8 @@ I.do('My First Test', function(I){
   I.sum();
 });
 ```
-终端输出：
+终端输出：  
+![default](https://user-images.githubusercontent.com/760498/30022768-5e8eae7c-919f-11e7-95a3-7c068bda6458.png)
 
 ### 浏览器环境
 用法：
@@ -53,9 +54,12 @@ I.do('My First Test', function(I){
   </body>
 </html>
 ```
-控制台输出：
-
+控制台输出：  
+![default](https://user-images.githubusercontent.com/760498/30022768-5e8eae7c-919f-11e7-95a3-7c068bda6458.png)
 ## 特点
 ### 测试框架与断言库一体化
 之前的大多数测试需要一个测试框架库和一个断言库，例如。而 ihope 将测试框架和断言库集成为一个整体，因此只要引入 ihope 就够了。
-### 
+### 断言自描述
+ihope 的断言用法本身（例如，`I.hope(text).is.string;` ）已经足够描述测试断言的本意，根本无须额外的断言描述信息，这可极大方便了测试用例的编写。
+### 支持同步和异步测试用例的书写
+若测试用例的执行函数是 `function (I){ ... }` 这种普通函数写法，则是编写同步测试用例；若测试用例的执行函数是 `function* (I){ ... }` 这种 GeneratorFunction 或 `async function (I){ ... }` 这种 AsyncFunction 写法，则可在其中编写异步测试用例。
