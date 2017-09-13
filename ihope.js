@@ -2,13 +2,13 @@
  * The most simplest test library in the world for JavaScript.
  */
 
-(function (global, Function, Object, String, Array, RegExp, Date, Error, Promise) {
+(function (global, window, Function, Object, String, Array, RegExp, Date, Error, Promise) {
   /** 任务启动: ----------------------------------------------------------------------------------------
    *
    */
   function main() {
     var promise, I;
-    if (global.window) {
+    if (window) {
       promise = new Promise(bind(addEventListener, global, 'load'));
       global.I = I = newI(null, "");
     }
@@ -131,22 +131,20 @@
 
   function reject(err) {
     var me = this;
-    if (err !== silence) {
-      var s;
-      if (err instanceof Timeout) {
-        if (err.I !== me) throw err;  // 若不是本层任务超时，则抛出至上层处理。
-        s = indent(format('#e⦸ Timeout Error: %dms!', err.I.timeout), err.I.indent);
-      }
-      else {
-        s = format('#e⦸ Error:', err instanceof Error ? err.message : String(err));
-        var trace = getTrace(err);
-        if (trace)
-          s += "\n  " + trace;
-        s = indent(s, me.indent);
-      }
-      print(s);
-      me.end = 1;
+    var s;
+    if (err instanceof Timeout) {
+      if (err.I !== me) throw err;  // 若不是本层任务超时，则抛出至上层处理。
+      s = indent(format('#e⦸ Timeout Error: %dms!', err.I.timeout), err.I.indent);
     }
+    else {
+      s = format('#e⦸ Error:', err instanceof Error ? err.message : String(err));
+      var trace = getTrace(err);
+      if (trace)
+        s += "\n  " + trace;
+      s = indent(s, me.indent);
+    }
+    print(s);
+    me.end = 1;
   }
 
   function Timeout(I) {
@@ -232,13 +230,13 @@
     if (total) {
       s += format(" Total asserts: #t%d#i,", total);
       if (okey) {
-        s += format( ' okey: #s%d%s#i,', okey, rate(okey));
+        s += format(' okey: #s%d%s#i,', okey, rate(okey));
       }
       if (fail) {
-        s += format( ' fail: #f%d%s#i,', fail, rate(fail));
+        s += format(' fail: #f%d%s#i,', fail, rate(fail));
       }
       if (miss) {
-        s += format( ' miss: #t%d%s#i,', miss, rate(miss));
+        s += format(' miss: #t%d%s#i,', miss, rate(miss));
       }
     }
 
@@ -246,7 +244,7 @@
     print(indent(s, me.indent));
 
     function rate(value) {
-      return isInteger(value=value/total*100) ? '(' + value + '%)' : '';
+      return Number.isInteger(value = value / total * 100) ? '(' + value + '%)' : '';
     }
   }
 
@@ -322,6 +320,7 @@
     },
 
     equal: function (expect) { assertEqual(this, 0, normalEqual, 'equals', expect) },
+    
     get strict() {
       var me = this;
       return {
@@ -363,7 +362,6 @@
           }
         }
         else if (isGeneratorFunction(value)) {
-          go(value, ...args)
           return apply(go, undefined, union([value], args))
             .then(function () {
               assertThrow(me, specified, error);
@@ -493,13 +491,6 @@
     report(it);
   }
 
-  function assertCompare(it, assert, expect) {
-    if (!assert ^ it.no)
-      it.fail = "actual: " + actual;
-    report(it);
-    return nop;
-  }
-
   function assertType(it, type) {
     if ((genusof(it.value) !== type) ^ it.no)
       it.fail = disappoint(textify(it.value), 'is', it.no, 'type as', type);
@@ -559,7 +550,7 @@
   function assertProperty(it, assert, verb, property) {
     var no = it.no;
     if (!assert ^ no)
-      it.fail = 'But ' + textify(it.value) + ' has ' + (no ? '' : 'no ') + verb + ' ' + JSON.stringify(property) + '.';
+      it.fail = 'But ' + textify(it.value) + ' has ' + (no ? '' : 'no ') + verb + ' ' + stringify(property) + '.';
     report(it);
   }
 
@@ -618,7 +609,7 @@
     var type = genusof(any), proto;
     if (type === 'object' || type === 'function') {
       if (proto = getPrototype(any)) {
-        if (proto.hasOwnProperty('constructor')) {
+        if (hasOwnProperty(proto, 'constructor')) {
           type = funcname(proto.constructor);
         }
         else {
@@ -635,10 +626,6 @@
   function funcname(any) {
     return isFunction(any) ?
       any.name || '[anonymous]' : '';
-  }
-
-  function isInstanceOf(any, type) {
-    return isFunction(type) ? any instanceof type : 0;
   }
 
   function normalEqual(a, b) { return a == b }
@@ -704,12 +691,13 @@
     function diffinfo(path, one, other) {
       return 'property ' + path + ' is different: one is ' + one + ', the other is ' + other + '.';
     }
+
     function propexp(prop) {
       if (match(prop, /[a-zA-Z_$][\w$]*/))
         return '.' + prop;
       if (match(prop, /^0$|^[1-9]\d*$/))
         return '[' + prop + ']';
-      return '[' + JSON.stringify(prop) + ']';
+      return '[' + stringify(prop) + ']';
     }
   }
 
@@ -719,7 +707,7 @@
   /** get(path) 获取文本资源 */
   var get;
 
-  if (global.window) {
+  if (window) {
     get = function (path) {
       var http = new XMLHttpRequest;
       http.open('GET', path, false);
@@ -737,13 +725,12 @@
   var reWhere = /\bwhere\b/;
   var reHere = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./-]+(?:\?.*|)):(\d+):(\d+)/;
   function where(deep) {
-    deep = Number.parseInt(deep) || 0;
-    var stack = Error().stack.split("\n");
+    var stack = split(Error().stack, "\n");
     for (var i = 0, line; line = stack[i++];) {
-      if (line.match(reWhere)) break;
+      if (match(line, reWhere)) break;
     }
     if (i < stack.length) {
-      var ms = stack[i + deep].match(reHere);
+      var ms = match(stack[i + deep], reHere);
       if (ms)
         return {
           trace: ms[0],
@@ -758,7 +745,7 @@
   function getTrace(error) {
     var stack = error.stack;
     if (stack) {
-      stack = stack.split("\n");
+      stack = split(stack, "\n");
       for (var i = 0, item; item = stack[i++];) {
         var ms = match(item, reTrace);
         if (ms) return ms[0];
@@ -768,7 +755,7 @@
 
   function getLine(deep) {
     var here, rows, row;
-    deep = Number.parseInt(deep) + 1 || 1;
+    deep += 1;
     if (here = where(deep)) {
       if (rows = getRows(here.loc)) {
         if (row = rows[here.row]) {
@@ -781,11 +768,11 @@
   var cachedRows = {};
   function getRows(loc) {
     var rows;
-    if (cachedRows.hasOwnProperty(loc)) {
+    if (hasOwnProperty(cachedRows, loc)) {
       rows = cachedRows[loc];
     }
     else {
-      rows = cachedRows[loc] = get(loc).split("\n");
+      rows = cachedRows[loc] = split(get(loc), "\n");
     }
     return rows;
   }
@@ -821,7 +808,7 @@
   }
 
   var colorize, colors;
-  if (global.window) {
+  if (window) {
     if (console.msIsIndependentlyComposed) {
       colors = [""];
       colorize = function (s, c) {
@@ -878,10 +865,77 @@
     return s;
   }
 
+  /** 代码加载: ----------------------------------------------------------------------------------------
+  *
+  */
+  iProto.js = function () {
+    var jss = [window ? location.pathname : process.argv[1]];
+
+    function js(url) {
+      url = purl(url, jss[jss.length - 1]);
+      var code = get(url) + '\n//# sourceURL=' + url;
+      push(jss, url);
+      try {
+        global.eval(code);
+      }
+      finally {
+        pop(jss);
+      }
+    }
+
+    /** purl(url, rel)  计算相对路径并规格化 */
+    var reUrl = /^(https?:\/\/[\w-.]+(?::\d+)?|)([\w\/.-]+)(.*|)/;
+    var reRel = /^(https?:\/\/[\w-.]+(?::\d+)?|)(\/(?:[\w.-]+\/)*)/;
+
+    function purl(url, rel) {
+      var ms = match(url, reUrl);
+      if (ms && !ms[1] && (rel = match(rel, reRel))) {
+        url = ms[2];
+        if (url[0] !== '/') {
+          url = rel[2] + url;
+        }
+        url = rel[1] + furl(url) + ms[3];
+      }
+      return url;
+    }
+
+    /** furl(url) 路径规格化 */
+    var reSlash = /\/+/;
+
+    function furl(src) {
+      var des = [];
+      src = split(src, reSlash);
+      for (var i = 0, l = src.length; i < l; i++) {
+        var sym = src[i];
+        if (des.length) {
+          if (sym !== '.') {
+            var end = des[des.length - 1];
+            if (sym !== '..') {
+              if (end === '.' && sym) pop(des);
+              push(des, sym);
+            }
+            else if (end === '..') {
+              push(des, sym);
+            }
+            else if (end) {
+              pop(des);
+            }
+          }
+        }
+        else {
+          push(des, sym);
+        }
+      }
+      return des.join('/');
+    }
+
+    return js;
+  }();
+
   /** 基础支持: ----------------------------------------------------------------------------------------
   *
   */
-  var undefined, silence;
+  var undefined;
 
   /** --------------------------------------------------------------------------
    * Function
@@ -921,15 +975,10 @@
     return Object(any) === any;    // typeof any === 'object' && any !== nil;
   }
 
-  function isObjective(any) {
-    return isObject(any) && !isFunction(any);
-  }
-
   var getPrototype = Object.getPrototypeOf;
   var setPrototype = Object.setPrototypeOf;
   var _isPrototypeOf = Object_prototype.isPrototypeOf;
-  var isPrototypeOf = func(_isPrototypeOf);
-
+  
   function genusof(any) {
     return any === null ? "null" : typeof any;
   }
@@ -960,11 +1009,6 @@
   }
 
   /** --------------------------------------------------------------------------
-   * Number
-   */
-  var isInteger = Number.isInteger;
-
-  /** --------------------------------------------------------------------------
    * String
    */
   var String_prototype = String.prototype;
@@ -978,44 +1022,21 @@
   var match = func(String_prototype.match);
   var split = func(String_prototype.split);
 
-  function dup(x, n) {
-    for (var dup = ''; n-- > 0;) dup += x;
-    return dup;
-  }
-
   var stringify = JSON.stringify;
 
   /** --------------------------------------------------------------------------
    * Array
    */
   var Array_prototype = Array.prototype;
-  var isArray = Array.isArray;
-  var seek = func(Array_prototype.indexOf);
-  var join = func(Array_prototype.join);
   var piece = func(Array_prototype.slice);
   var splice = func(Array_prototype.splice);
   var push = func(Array_prototype.push);
   var pop = func(Array_prototype.pop);
 
-  function peak(ary) {
-    return ary[ary.length - 1];
-  }
-
-  /** --------------------------------------------------------------------------
-   * RegExp
-   */
-  var RegExp_prototype = RegExp.prototype;
-  var _test = RegExp_prototype.test;
-
   /** --------------------------------------------------------------------------
    * Date
    */
   var now = Date.now;
-
-  /** --------------------------------------------------------------------------
-   * Error
-   */
-  var isError = bind(_isPrototypeOf, Error.prototype);
 
   /** --------------------------------------------------------------------------
    * Iterator, Promise, Generator, Async Function
@@ -1040,4 +1061,4 @@
   var indent = partial(replace, [, /^/gm]);
 
   main();
-})(this.window || global, Function, Object, String, Array, RegExp, Date, Error, Promise);
+})(this.window || global, this.window, Function, Object, String, Array, RegExp, Date, Error, Promise);
