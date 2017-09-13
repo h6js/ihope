@@ -878,6 +878,94 @@
     return s;
   }
 
+  /** 代码加载: ----------------------------------------------------------------------------------------
+  *
+  */
+  iProto.js = function () {
+    var path = require('path');
+  
+    js.files = [process.argv[1]];
+  
+    function js(url) {
+      url = purl(url, js.files[js.files.length-1]);
+      var code = get(url)+'\n//# sourceURL=' + url;
+      js.files.push(url);
+      try {
+        global.eval(code);
+      }
+      finally {
+        js.files.pop();
+      }
+    }
+  
+    /** purl(url, rel)  计算相对路径并规格化 */
+    var reUrl = /^(https?:\/\/[\w-.]+(?::\d+)?|)([\w\/.-]+)(.*|)/;
+    var reRel = /^(https?:\/\/[\w-.]+(?::\d+)?|)(\/(?:[\w.-]+\/)*)/;
+  
+    function purl(url, rel) {
+      var ms = match(url, reUrl);
+      if (ms && !ms[1] && (rel = match(rel, reRel))) {
+        url = ms[2];
+        if (url[0] !== '/') {
+          url = rel[2] + url;
+        }
+        url = rel[1] + furl(url) + ms[3];
+      }
+      return url;
+    }
+  
+    /** furl(url) 路径规格化 */
+    var reSlash = /\/+/;
+  
+    function furl(src) {
+      var des = [];
+      src = split(src, reSlash);
+      for (var i = 0, l = src.length; i < l; i++) {
+        var sym = src[i];
+        if (des.length) {
+          if (sym !== '.') {
+            var end = peak(des);
+            if (sym !== '..') {
+              if (end === '.' && sym) pop(des);
+              push(des, sym);
+            }
+            else if (end === '..') {
+              push(des, sym);
+            }
+            else if (end) {
+              pop(des);
+            }
+          }
+        }
+        else {
+          push(des, sym);
+        }
+      }
+      return join(des, '/');
+    }
+  
+    /** get(path) 获取文本资源 */
+    var get;
+  
+    if (global.window) {
+      get = function (path) {
+        var http = new XMLHttpRequest;
+        http.open('GET', path, false);
+        http.send();
+        return http.status / 100 ^ 2 ? '' : http.responseText;
+      };
+    }
+    else {
+      var fs = require('fs');
+      get = function (path) {
+        return fs.readFileSync(path, { encoding: 'utf-8' });
+      };
+    }
+  
+    return js;
+  
+  }();
+  
   /** 基础支持: ----------------------------------------------------------------------------------------
   *
   */
