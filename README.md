@@ -113,7 +113,7 @@ describe('My Test', function(I){
 
 `I.say('my description').if(assert)` 后面的 `assert` 是一个断言条件，根据 `assert` 的真假，输出成功或失败的 `my description`。
 
-`I.say('my description').on(func)` 也类似，只要执行函数 func 不抛出异常就成功，否则输出失败的 `my description`.
+`I.say('my description').on(func)` 也类似，只要执行函数 func 不抛出异常就成功，否则输出失败的 `my description`.
 
 ### 测试回调函数的写法
 例如：
