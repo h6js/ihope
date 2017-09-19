@@ -22,12 +22,8 @@
   /** 任务调度: ----------------------------------------------------------------------------------------
    *
    */
-
   var iProto = {
     do: function (topic, func, timeout) {
-      // var me = this;
-      // var i = newI(me, topic, func, timeout);
-      // push(me.its, it);
       push(this.dos, bind(run, newI(this, topic, func, timeout)));
     },
 
@@ -57,6 +53,11 @@
       push(this.dos, bind(sum, this));
     },
     assert: assert,
+    sure: sure,
+    get am() {
+      var me = this;
+      return { sure: bind(sure, me) };
+    },
     hope: hope,
     say: say
   };
@@ -75,56 +76,58 @@
 
   function run() {
     var me = this, func = me.func, promise;
-    var topic = "#i" + me.topic;
+    var topic = me.topic;
     if (me.timeout)
       topic += format("(#t%dms)", me.ms);
-    print(indent(topic, me.parent.indent));
-
     me.zero = now();
-    if (isSyncFunction(func)) {
-      promise = func.length > 1 ?
-        new Promise(function (fulfill, reject) {
-          // func(me, resolve, reject);
-          func(me, fulfilled, rejected);
-          function fulfilled(f) {
-            if (isFunction(f))
-              return function () {
-                try {
-                  fulfill(me.end ? undefined : apply(f, undefined, arguments));
-                }
-                catch (e) {
-                  reject(e)
-                }
-              };
-            fulfill(f);
-          }
-          function rejected(f) {
-            if (isFunction(f))
-              return function () {
-                reject(me.end ? undefined : apply(f, undefined, arguments));
-              };
-            reject(f);
-          }
-        })
-        :
-        new Promise(function (fulfill, reject) {
-          fulfill(func(me));
+    if(isSyncFunction(func)) {
+      if(func.name!=='$') {
+        print(indent(topic, me.parent.indent));
+        promise = new Promise(function (goon) {
+          goon(func(me));
         });
-    }
-    else if (isAsyncFunction(func)) {
-      promise = func(me);
+      }
+      else {
+        promise = new Promise(function (goon) {
+          var it = newIt(me.parent, topic);
+          me.parent.do = function () {
+            reporting();
+            iProto.do.apply(me, arguments);
+            goon();
+          }
+          func(done);
+
+          function done(err) {
+            if (!it.end) {
+              reporting(err);
+              goon();
+            }
+          }
+          function reporting(err) {
+            if (err) {
+              it.fail = err instanceof Error ? err.message : String(err);
+            }
+            report(it);
+          }
+        });
+      }
     }
     else if (isGeneratorFunction(func)) {
+      print(indent(topic, me.parent.indent));
       promise = go(func, me);
     }
-
-    return promise.then(review.bind(me)).then(runs.bind(me.dos)).catch(reject.bind(me));
+    else if (isAsyncFunction(func)) {
+      print(indent(topic, me.parent.indent));
+      promise = func(me);
+    }
+    if (promise)
+      return promise.then(review.bind(me)).then(runs.bind(me.dos)).catch(reject.bind(me));
   }
 
   function runs() {
     var chain = Promise.resolve();
-    for (var i = 0, task; task = this[i]; i++) {
-      chain = chain.then(task);
+    for (var i = 0, run; run = this[i]; i++) {
+      chain = chain.then(run);
     }
     return chain;
   }
@@ -252,6 +255,11 @@
    *
    */
   function assert(assert) {
+    if (!assert)
+      throw Error('Assert failure!');
+  }
+
+  function sure(assert) {
     var it = newIt(this);
     if (!assert)
       it.fail = 'Assert failure!';
@@ -265,18 +273,18 @@
 
   function say(topic) {
     var me = this;
+    var it = newIt(me, topic);
     return {
       if: function (assert) {
-        var it = newIt(me, topic);
         if (!assert)
           it.fail = 'Assert failure!';
         report(it);
       },
       as: function (value) {
-        return newIt(me, topic, value);
+        it.value = value;
+        return it;
       },
-      on: function (func) {
-        var it = newIt(me, topic);
+      on: function on(func) {
         try {
           func();
         }
@@ -285,7 +293,7 @@
         }
         report(it);
       }
-    }
+    };
   }
 
   function newIt(parent, topic, value) {
@@ -297,7 +305,6 @@
       code = trim(line.code);
       it.trace = line.trace;
     }
-    it.topic = trim(line.code);
     it.topic = topic || code || "unknown testing"
     it.value = value;
     it.indent = parent.indent;
@@ -320,7 +327,7 @@
     },
 
     equal: function (expect) { assertEqual(this, 0, normalEqual, 'equals', expect) },
-    
+
     get strict() {
       var me = this;
       return {
@@ -869,7 +876,7 @@
   *
   */
   iProto.js = function () {
-    var jss = [window ? location.pathname : process.argv[1]];
+    var jss = [window ? location.pathname : process.cwd() + '/'];
 
     function js(url) {
       url = purl(url, jss[jss.length - 1]);
@@ -970,15 +977,14 @@
    */
   var Object_prototype = Object.prototype;
   var create = Object.create;
+  var getPrototype = Object.getPrototypeOf;
+  var setPrototype = Object.setPrototypeOf;
+  var _isPrototypeOf = Object_prototype.isPrototypeOf;
 
   function isObject(any) {
     return Object(any) === any;    // typeof any === 'object' && any !== nil;
   }
 
-  var getPrototype = Object.getPrototypeOf;
-  var setPrototype = Object.setPrototypeOf;
-  var _isPrototypeOf = Object_prototype.isPrototypeOf;
-  
   function genusof(any) {
     return any === null ? "null" : typeof any;
   }
@@ -1021,7 +1027,6 @@
   var replace = func(String_prototype.replace);
   var match = func(String_prototype.match);
   var split = func(String_prototype.split);
-
   var stringify = JSON.stringify;
 
   /** --------------------------------------------------------------------------
@@ -1042,7 +1047,6 @@
    * Iterator, Promise, Generator, Async Function
    */
   var isIterator = bind(_isPrototypeOf, getPrototype(getPrototype(''[Symbol.iterator]())));
-
   var isPromise = bind(_isPrototypeOf, Promise.prototype);
 
   function isGeneratorFunction(any) {

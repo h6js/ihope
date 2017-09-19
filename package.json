@@ -2,9 +2,27 @@
   "name": "ihope",
   "version": "0.0.3",
   "description": "JavaScript Testing Libaray",
-  "keywords": [ "ihope", "javascript", "test" ],
+  "keywords": [
+    "ihope",
+    "test"
+  ],
   "license": "MIT",
-  "author": { "name": "leadzen", "email": "leadzen@qq.com" },
-  "files": [ "ihope.js", "README.md" ],
-  "main": "ihope.js"
+  "author": {
+    "name": "leadzen",
+    "email": "leadzen@qq.com"
+  },
+  "bin": {
+    "it": "bin/it"
+  },
+  "main": "dist/ihope.js",
+  "files": [
+    "dist/ihope.js",
+    "bin/it"
+  ],
+  "devDependencies": {
+    "uglify-js": "^3.1.0"
+  },
+  "scripts": {
+    "prepublish": "node build/pack.js"
+  }
 }
