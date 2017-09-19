@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 var files = process.argv.slice(2);
 if( files.length ) {
-  global.I = require('../src/ihope.js');
+  try { global.I = require('ihope') }
+  catch(e) {global.I = require('../src/ihope.js')};
   var path = require('path');
   var cwd = process.cwd();
   for(var i=0; i<files.length; i++) {
