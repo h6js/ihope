@@ -729,7 +729,7 @@
     };
   }
 
-  var reWhere = /\bwhere\b/;
+  var reWhere = RegExp('\\b'+where.name+'\\b');
   var reHere = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./-]+(?:\?.*|)):(\d+):(\d+)/;
   function where(deep) {
     var stack = split(Error().stack, "\n");
