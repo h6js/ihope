@@ -68,6 +68,7 @@ ihope 的断言用法本身（例如，`I.hope(text).is.string;` ）已经足够
 ### 支持同步和异步测试用例的书写
 若测试用例的执行函数是 `function (I){ ... }` 这种普通函数写法，则是编写同步测试用例；若测试用例的执行函数是 `function* (I){ ... }` 这种 GeneratorFunction 或 `async function (I){ ... }` 这种 AsyncFunction 写法，则可在其中编写异步测试用例。
 
+
 ## 主要功能
 ### 一般测试用例写法：
 ```js
@@ -87,9 +88,10 @@ I.do('Test Hello World', function (I) {
 ![image](https://user-images.githubusercontent.com/760498/30582477-66b793bc-9d56-11e7-962b-21f9579f1c2e.png)
 
 用 I.do() 开始一个测试用例，给用例指定一个描述，并给出一个测试函数。其中，测试函数的参数是下一层的 I 对象，可使用其方法进行各种断言测试，或开始一个子测试用例。
+
 一般，在测试用例函数的末尾，可以调用 I.sum() 对测试点进行汇总报告。
 
-那些 `I.hope(hello).equal('hello');` 等测试点本身是自描述的，测试成功或失败都会以这段代码作为测试点的描述信息。
+那些 `I.hope(hello).equal('hello');` 等测试点本身是自描述的，测试成功或失败都会以这段代码作为测试点的描述信息。
 
 ### 也可用文字描述测试点
 ihope 建议尽量使用自描述的测试断言，但你一定要用文字描述也是可以的：
@@ -125,7 +127,7 @@ I.do('Asynchronous read file', function (I) {
 输出：
 ![image](https://user-images.githubusercontent.com/760498/30583288-376b9b0a-9d59-11e7-8b3f-72e11a1ee799.png)
 
-若测试函数名为 `$` 则测试用例转换为回调测试，测试函数将必须制定一个参数 `done`，其也是一个回调函数。在你的回调代码中，必须再调用 `done()` 或 `done(err)` 来完成回调测试点的流程。
+若测试函数名为 `$` 则测试用例转换为回调测试，测试函数将必须制定一个参数 `done`，其也是一个回调函数。在你的回调代码中，必须再调用 `done()` 或 `done(err)` 来完成回调测试点的流程。
 
 ihope 支持在回调成功后，继续对回调结果进行测试。例如：
 ```js
@@ -147,7 +149,7 @@ I.do('Asynchronous read file', function (I) {
 输出：
 ![image](https://user-images.githubusercontent.com/760498/30583600-17473c5c-9d5a-11e7-9e3d-4cc5d4e8aba1.png)
 
-虽然，你可以在回调成功后，继续任意的测试或子测试，但直接用后面的 Generator 或 async 测试函数来进行异步测试将会更好。
+虽然，你可以在回调成功后，继续任意的测试或子测试，但直接用后面的 Generator 或 async 测试函数来进行异步测试将会更好。
 
 ### Promise 测试
 测试 Promise 本质与回调函数相同，例如：
@@ -181,7 +183,7 @@ I.do('This is generator function test case:', function* (I) {
 输出：
 ![image](https://user-images.githubusercontent.com/760498/30583951-ec41e4e8-9d5a-11e7-8d54-8adf2f278dd9.png)
 
-`function* (I) {...}` 启动异步测试，其中可以自然地配合 `yield` 关键字处理任何异步等待操作。ihope 内置对 Generator 代码的运行调度机制，您可以在其中嵌套任何同步或异步的子测试，这些测试都会依据层次逻辑依次运行。
+`function* (I) {...}` 启动异步测试，其中可以自然地配合 `yield` 关键字处理任何异步等待操作。ihope 内置对 Generator 代码的运行调度机制，您可以在其中嵌套任何同步或异步的子测试，这些测试都会依据层次逻辑依次运行。
 
 ### async 测试函数
 上面的用例简单改为 `async function(I){...}` 并配合 `await` 关键字，就是 async 的测试代码：
@@ -198,10 +200,11 @@ I.do('This is async function test case:', async function (I) {
 输出：
 ![image](https://user-images.githubusercontent.com/760498/30584278-d5d84994-9d5b-11e7-9a8f-0de1eec1b40c.png)
 
-## 文档
+## 文档
 
 没时间写 ...
 
 
+
+
  -- 李战(leadzen) 2017.09.19 杭州
- 
