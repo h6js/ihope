@@ -1,7 +1,7 @@
 (function () {
   var nop = Function.prototype;
   document.head.appendChild(document.createElement('style'))
-    .textContent = '*{margin: 0} body{margin: 0.5em; background: #111; line-height: 18px; font-size: 14px; font-family: Menlo, Monaco, Courier New, monospace;}';
+    .textContent = '*{margin: 0} body{margin: 0.5em; background: #111; color:lightgray; line-height: 18px; font-size: 14px; font-family: Menlo, Monaco, Courier New, monospace;}';
 
   var reVars = /%[sdc]/g;
   window.console = {
