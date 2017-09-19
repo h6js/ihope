@@ -2,10 +2,10 @@ I.do('I.do() for callback :', function (I) {
   I.do('callback in time.', function $(done){
     setTimeout(function(){
       done();
-    }, 500);
+    }, 50);
     setTimeout(function(){
       done(new Error('time out!'));
-    }, 10000);
+    }, 100);
   });
 
   I.do('callback and goon.', function $(done){
