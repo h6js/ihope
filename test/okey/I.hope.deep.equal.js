@@ -115,6 +115,11 @@ I.do('.deep.equal() asserts:', function (I) {
   var object_b = { a: 'a', b: { 0: 'a', 1: { '00': 'a', '01': 'B', '02': 'c' }, 2: 'c', }, c: 'c' };
   I.hope(object_a).not.deep.equal(object_b);
 
+  var array_a = [0,1,2];
+  var array_b = [0,1];
+  I.hope(array_a).not.deep.equal(array_b);
+  I.hope(array_b).not.deep.equal(array_a);
+  
   I.sum();
 });
 

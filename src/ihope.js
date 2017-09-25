@@ -80,8 +80,8 @@
     if (me.timeout)
       topic += format("(#t%dms)", me.ms);
     me.zero = now();
-    if(isSyncFunction(func)) {
-      if(func.name!=='$') {
+    if (isSyncFunction(func)) {
+      if (func.name !== '$') {
         print(indent(topic, me.parent.indent));
         promise = new Promise(function (goon) {
           goon(func(me));
@@ -91,9 +91,11 @@
         promise = new Promise(function (goon) {
           var it = newIt(me.parent, topic);
           me.parent.do = function () {
-            reporting();
-            iProto.do.apply(me, arguments);
-            goon();
+            if (!it.end) {
+              reporting();
+              iProto.do.apply(me, arguments);
+              goon();
+            }
           }
           func(done);
 
@@ -669,29 +671,26 @@
       length = i;
     aKeys.sort();
     bKeys.sort();
-    for (i = 0; i < length; i++) {
-      var aKey = aKeys[i], aValue, bKey = bKeys[i], bValue;
-      if (aKey === bKey) {
-        aValue = a[aKey], bValue = b[bKey];
-        if (!equal(aValue, bValue)) {
-          if (isObject(aValue) && isObject(bValue)) {
-            var dif;
-            if (dif = diff(aValue, bValue, equal, path + propexp(aKey)))
-              return dif;
-          }
-          else {
-            return diffinfo(path + propexp(aKey), textify(aValue), textify(bValue));
-          }
+    var aKey, bKey;
+    for (i = 0; i < length && (aKey = aKeys[i]) === (bKey = bKeys[i]); i++) {
+      var aValue = a[aKey], bValue = b[bKey];
+      if (!equal(aValue, bValue)) {
+        if (isObject(aValue) && isObject(bValue)) {
+          var dif;
+          if (dif = diff(aValue, bValue, equal, path + propexp(aKey)))
+            return dif;
+        }
+        else {
+          return diffinfo(path + propexp(aKey), textify(aValue), textify(bValue));
         }
       }
-      else if (aKey < bKey) {
+    }
+    if (aKey !== bKey) {
+      if (aKey < bKey || bKey === undefined) {
         return diffinfo(path + propexp(aKey), textify(a[aKey]), 'absent');
       }
-      else if (bKey < aKey) {
+      if (bKey < aKey || aKey === undefined) {
         return diffinfo(path + propexp(bKey), 'absent', textify(b[bKey]));
-      }
-      else {
-        break;
       }
     }
 
@@ -729,7 +728,7 @@
     };
   }
 
-  var reWhere = RegExp('\\b'+where.name+'\\b');
+  var reWhere = RegExp('\\b' + where.name + '\\b');
   var reHere = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./-]+(?:\?.*|)):(\d+):(\d+)/;
   function where(deep) {
     var stack = split(Error().stack, "\n");
@@ -875,18 +874,22 @@
   /** 代码加载: ----------------------------------------------------------------------------------------
   *
   */
+  var jsed = {};
   iProto.js = function () {
     var jss = [window ? location.pathname : process.cwd() + '/'];
 
     function js(url) {
       url = purl(url, jss[jss.length - 1]);
-      var code = get(url) + '\n//# sourceURL=' + url;
-      push(jss, url);
-      try {
-        global.eval(code);
-      }
-      finally {
-        pop(jss);
+      if (!jsed[url]) {
+        jsed[url] = 1;
+        var code = get(url) + '\n//# sourceURL=' + url;
+        push(jss, url);
+        try {
+          global.eval(code);
+        }
+        finally {
+          pop(jss);
+        }
       }
     }
 
