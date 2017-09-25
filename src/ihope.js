@@ -63,15 +63,22 @@
   };
 
   function newI(parent, topic, func, timeout) {
-    var it = create(iProto);
-    it.parent = parent;
-    it.topic = topic;
-    it.func = func;
-    it.timeout = timeout;
-    it.indent = parent ? parent.indent + "  " : "";
-    it.dos = [];
-    it.its = [];
-    return it;
+    var I = create(iProto);
+    I.parent = parent;
+    I.topic = topic;
+    I.func = func;
+    I.timeout = timeout;
+    I.dos = [];
+    I.its = [];
+    if(parent) {
+      I.indent = parent.indent + "  ";
+      I.path = parent.path;
+    }
+    else {
+      I.indent = "";
+      I.path = window ? location.pathname : process.cwd() + '/';
+    }
+    return I;
   }
 
   function run() {
@@ -874,21 +881,25 @@
   /** 代码加载: ----------------------------------------------------------------------------------------
   *
   */
-  var jsed = {};
-  iProto.js = function () {
-    var jss = [window ? location.pathname : process.cwd() + '/'];
+  (function(){
+    iProto.get = function(url) {
+      url = purl(url, this.path);
+      return get(url);
+    };
 
-    function js(url) {
-      url = purl(url, jss[jss.length - 1]);
+    var jsed = {};
+    iProto.js = function (url) {
+      url = purl(url, this.path);
       if (!jsed[url]) {
         jsed[url] = 1;
         var code = get(url) + '\n//# sourceURL=' + url;
-        push(jss, url);
+        var path = this.path;
+        this.path = url;
         try {
           global.eval(code);
         }
         finally {
-          pop(jss);
+          this.path = path;
         }
       }
     }
@@ -938,9 +949,7 @@
       }
       return des.join('/');
     }
-
-    return js;
-  }();
+  })();
 
   /** 基础支持: ----------------------------------------------------------------------------------------
   *

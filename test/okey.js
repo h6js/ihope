@@ -1,5 +1,6 @@
 I.js('./okey/I.assert.js');
 I.js('./okey/I.do.js');
+I.js('./okey/I.get.js');
 I.js('./okey/I.hope.deep.equal.js');
 I.js('./okey/I.hope.deep.strict.equal.js');
 I.js('./okey/I.hope.equal.js');
