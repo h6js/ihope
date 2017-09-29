@@ -276,8 +276,10 @@
   }
 
   function hope(value) {
-    var me = this;
-    return newIt(me, "", value);
+    var it = newIt(this, "", value);
+    if(arguments.length>1)
+      it.args = piece(arguments, 1);
+    return it;
   }
 
   function say(topic) {
@@ -317,7 +319,6 @@
     it.topic = topic || code || "unknown testing"
     it.value = value;
     it.indent = parent.indent;
-    it.args = piece(arguments, 3);
     it.zero = now();
     push(parent.its, it);
     return it;
