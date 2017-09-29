@@ -1,4 +1,4 @@
-I.do('I.hope().throw() :', function (I) {
+I.do('I.hope(f).throw() :', function (I) {
   I.hope(function () { }).throw();
   I.hope(function () { throw undefined }).not.throw();
   I.hope(function () { throw null }).not.throw();
@@ -82,7 +82,16 @@ I.do('I.hope().throw() :', function (I) {
   I.sum();
 });
 
-I.do('I.hope.throw() in generator function:', function* (I) {
+I.do('I.hope(f,...).throw() :', function (I) {
+  function helloworld(hello, world) {
+    throw hello+' '+world;
+  }
+  I.hope(helloworld, 'hello', 'world').not.throw('hello world');
+
+  I.sum();
+});
+
+I.do('I.hope(f).throw() in generator function:', function* (I) {
   yield I.hope(function () { }).throw(Error);
   yield I.hope(function () { throw undefined }).throw(Error);
   yield I.hope(function () { throw null }).throw(Error);
@@ -99,7 +108,7 @@ I.do('I.hope.throw() in generator function:', function* (I) {
   I.sum();
 });
 
-I.do('I.hope().throw(Error) in async function:', async function (I) {
+I.do('I.hope(f).throw(Error) in async function:', async function (I) {
   await I.hope(function () { }).throw(Error);
   await I.hope(function () { throw undefined }).throw(Error);
   await I.hope(function () { throw null }).throw(Error);

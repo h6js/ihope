@@ -82,6 +82,16 @@ I.do('I.hope().throw() :', function (I) {
   I.sum();
 });
 
+I.do('I.hope(f,...).throw() :', function (I) {
+  function helloworld(hello, world) {
+    throw hello+' '+world;
+  }
+  
+  I.hope(helloworld, 'hello', 'world').throw('hello world');
+
+  I.sum();
+});
+
 I.do('I.hope.throw() in generator function:', function* (I) {
   yield I.hope(function () { }).not.throw(Error);
   yield I.hope(function () { throw undefined }).not.throw(Error);
