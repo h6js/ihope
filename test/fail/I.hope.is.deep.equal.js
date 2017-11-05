@@ -113,6 +113,9 @@ I.do('I.hope().is.deep.equal() asserts:', function (I) {
   var object_b = { a: 'a', b: { 0: 'a', 1: { '00': 'a', '01': 'B', '02': 'c' }, 2: 'c', }, c: 'c' };
   I.hope(object_a).is.deep.equal(object_b);
 
+  I.hope(/abc/i).is.not.deep.equal(/abc/i);
+  I.hope(/abc/g).is.deep.equal(/ABC/);
+  
   I.sum();
 });
 

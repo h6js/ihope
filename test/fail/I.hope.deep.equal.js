@@ -122,6 +122,9 @@ I.do('.deep.equal() asserts:', function (I) {
   I.hope(array_a).deep.equal(array_b);
   I.hope(array_b).deep.equal(array_a);
 
+  I.hope(/abc/i).not.deep.equal(/abc/i);
+  I.hope(/abc/g).deep.equal(/ABC/);
+  
   I.sum();
 });
 
