@@ -99,6 +99,10 @@ I.do('I.hope().deep.strict.equal() :', function (I) {
   var object_a = { a: 'a', b: { 0: 'a', 1: { '00': 'a', '02': 'c' }, 2: 'c', }, c: 'c' };
   var object_b = { a: 'a', b: { 0: 'a', 1: { '00': 'a', '01': 'B', '02': 'c' }, 2: 'c', }, c: 'c' };
   I.hope(object_a).not.deep.strict.equal(object_b);
+
+  I.hope(/abc/i).deep.strict.equal(/abc/i);
+  I.hope(/abc/g).not.deep.strict.equal(/ABC/);
+  
   I.sum();
 });
 

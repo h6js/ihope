@@ -70,7 +70,7 @@
     I.timeout = timeout;
     I.dos = [];
     I.its = [];
-    if(parent) {
+    if (parent) {
       I.indent = parent.indent + "  ";
       I.path = parent.path;
     }
@@ -277,7 +277,7 @@
 
   function hope(value) {
     var it = newIt(this, "", value);
-    if(arguments.length>1)
+    if (arguments.length > 1)
       it.args = piece(arguments, 1);
     return it;
   }
@@ -336,22 +336,22 @@
       return this;
     },
 
-    equal: function (expect) { assertEqual(this, 0, normalEqual, 'equals', expect) },
+    equal: function (expect) { assertEqual(this, normalEqual, 'equals', expect) },
 
     get strict() {
       var me = this;
       return {
-        equal: function (expect) { assertEqual(me, 0, strictEqual, 'strict equals', expect) }
+        equal: function (expect) { assertEqual(me, strictEqual, 'strict equals', expect) }
       }
     },
 
     get deep() {
       var me = this;
       return {
-        equal: function (expect) { assertEqual(me, 1, normalEqual, 'deep equals', expect) },
+        equal: function (expect) { assertDeepEqual(me, normalEqual, 'deep equals', expect) },
         get strict() {
           return {
-            equal: function (expect) { assertEqual(me, 1, strictEqual, 'deep strict equals', expect) }
+            equal: function (expect) { assertDeepEqual(me, strictEqual, 'deep strict equals', expect) }
           }
         }
       }
@@ -410,18 +410,18 @@
       get finite() { return assertValue(me, Number.isFinite(me.value), 'finite') },
       get a() { return newA(me) },
       get an() { return newA(me) },
-      equal: function (expect) { assertEqual(me, 0, normalEqual, 'equal to', expect) },
+      equal: function (expect) { assertEqual(me, normalEqual, 'equal to', expect) },
       get strict() {
         return {
-          equal: function (expect) { assertEqual(me, 0, strictEqual, 'strict equal to', expect) }
+          equal: function (expect) { assertEqual(me, strictEqual, 'strict equal to', expect) }
         }
       },
       get deep() {
         return {
-          equal: function (expect) { assertEqual(me, 1, normalEqual, 'deep equal to', expect) },
+          equal: function (expect) { assertDeepEqual(me, normalEqual, 'deep equal to', expect) },
           get strict() {
             return {
-              equal: function (expect) { assertEqual(me, 1, strictEqual, 'deep strict equal to', expect) }
+              equal: function (expect) { assertDeepEqual(me, strictEqual, 'deep strict equal to', expect) }
             }
           }
         }
@@ -487,26 +487,28 @@
     report(it);
   }
 
-  function assertEqual(it, deep, compare, verb, expect) {
+  function assertEqual(it, compare, verb, expect) {
     var value = it.value, not = it.no, assert;
-    if (deep && isObject(value) && isObject(expect)) {
-      var valueDiff = {}, expectDiff = {};
-      var dif = diff(value, expect, compare, '');
-      if (!!dif ^ not)
-        it.fail = "hope " + textify(value) + ' is ' + (not ? 'not ' : '') + verb + ' ' + textify(expect) + '.'
-          + '\n' + (dif ? dif : 'there is no different for ' + verb + '.');
-    }
-    else {
-      assert = compare(value, expect);
-      if (!assert ^ not) {
-        var type = typeclass(value);
-        if (match(type, /^[A-Z]|symbol/) && type === typeclass(expect))
-          verb += not ? ' the same' : ' another';
-        it.fail = "hope " + textify(value) + ' is ' + (not ? 'not ' : '') + verb + ' ' + textify(expect) + '.';
-      }
+    assert = compare(value, expect);
+    if (!assert ^ not) {
+      var type = typeclass(value);
+      if (match(type, /^[A-Z]|symbol/) && type === typeclass(expect))
+        verb += not ? ' the same' : ' another';
+      it.fail = "hope " + textify(value) + ' is ' + (not ? 'not ' : '') + verb + ' ' + textify(expect) + '.';
     }
     report(it);
   }
+
+  function assertDeepEqual(it, compare, verb, expect) {
+    var value = it.value, not = it.no, assert, dif;
+    dif = diff(value, expect, compare);
+    if (!!dif ^ not)
+      it.fail = "hope " + textify(value) + ' is ' + (not ? 'not ' : '') + verb + ' ' + textify(expect) + '.'
+        + '\n' + (dif ? dif : 'there is no different for ' + verb + '.');
+    report(it);
+  }
+
+
 
   function assertType(it, type) {
     if ((genusof(it.value) !== type) ^ it.no)
@@ -646,6 +648,7 @@
   }
 
   function normalEqual(a, b) { return a == b }
+
   function strictEqual(a, b) { return a === b }
 
   function textify(any) {
@@ -668,42 +671,45 @@
     return s;
   }
 
-  function diff(a, b, equal, path) {
-    var aKeys = [], bKeys = [], i, length;
-    i = 0;
-    for (aKeys[i++] in a);
-    length = i;
-    i = 0;
-    for (bKeys[i++] in b);
-    if (i > length)
-      length = i;
-    aKeys.sort();
-    bKeys.sort();
-    var aKey, bKey;
-    for (i = 0; i < length && (aKey = aKeys[i]) === (bKey = bKeys[i]); i++) {
-      var aValue = a[aKey], bValue = b[bKey];
-      if (!equal(aValue, bValue)) {
-        if (isObject(aValue) && isObject(bValue)) {
-          var dif;
-          if (dif = diff(aValue, bValue, equal, path + propexp(aKey)))
-            return dif;
+  function diff(a, b, equal) {
+    var aValue, bValue;
+    if (!equal(a, b)) {
+      if (isObject(a) && isObject(b)) {
+        if (isRegExp(a) && isRegExp(b)) {
+          aValue = a.toString(), bValue = b.toString();
+          if (!equal(aValue, bValue))
+            return ': one is ' + aValue + ', the other is ' + bValue + '.';
         }
-        else {
-          return diffinfo(path + propexp(aKey), textify(aValue), textify(bValue));
+        var aKeys = [], bKeys = [], i, length;
+        i = 0;
+        for (aKeys[i++] in a);
+        length = i;
+        i = 0;
+        for (bKeys[i++] in b);
+        if (i > length)
+          length = i;
+        aKeys.sort();
+        bKeys.sort();
+        var aKey, bKey;
+        for (i = 0; i < length && (aKey = aKeys[i]) === (bKey = bKeys[i]); i++) {
+          aValue = a[aKey], bValue = b[bKey];
+          var dif = diff(aValue, bValue, equal);
+          if (dif) {
+            return propexp(aKey) + dif;
+          }
+        }
+        if (aKey !== bKey) {
+          if (aKey < bKey || bKey === undefined) {
+            return propexp(aKey) + ': one is ' + textify(a[aKey]) + ', the other is absent.';
+          }
+          if (bKey < aKey || aKey === undefined) {
+            return propexp(bKey) + ': one is absent, the other is ' + textify(b[bKey]) + '.';
+          }
         }
       }
-    }
-    if (aKey !== bKey) {
-      if (aKey < bKey || bKey === undefined) {
-        return diffinfo(path + propexp(aKey), textify(a[aKey]), 'absent');
+      else {
+        return ': one is ' + textify(a) + ', the other is ' + textify(b);
       }
-      if (bKey < aKey || aKey === undefined) {
-        return diffinfo(path + propexp(bKey), 'absent', textify(b[bKey]));
-      }
-    }
-
-    function diffinfo(path, one, other) {
-      return 'property ' + path + ' is different: one is ' + one + ', the other is ' + other + '.';
     }
 
     function propexp(prop) {
@@ -882,8 +888,8 @@
   /** 代码加载: ----------------------------------------------------------------------------------------
   *
   */
-  (function(){
-    iProto.get = function(url) {
+  (function () {
+    iProto.get = function (url) {
       url = purl(url, this.path);
       return get(url);
     };
@@ -1050,6 +1056,13 @@
   var splice = func(Array_prototype.splice);
   var push = func(Array_prototype.push);
   var pop = func(Array_prototype.pop);
+
+  /** --------------------------------------------------------------------------
+   * RegExp
+   */
+  function isRegExp(any) {
+    return any instanceof RegExp;
+  }
 
   /** --------------------------------------------------------------------------
    * Date
