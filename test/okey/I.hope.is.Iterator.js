@@ -4,5 +4,5 @@ I.do('I.hope().is.Iterator :', function (I) {
   I.hope([][Symbol.iterator]()).is.Iterator;
   I.hope(function* () { }()).is.Iterator;
 
-  I.sum();
+
 });

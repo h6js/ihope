@@ -22,5 +22,5 @@ I.do('I.hope.RegExp :', function (I) {
     I.hope(arguments).is.RegExp;
   })();
 
-  I.sum();
+
 });

@@ -22,5 +22,5 @@ I.do('I.hope.a.Set :', function (I) {
     I.hope(arguments).is.a.Set;
   })();
 
-  I.sum();
+
 });

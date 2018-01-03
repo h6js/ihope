@@ -14,5 +14,5 @@ I.do('I.hope.finite :', function (I) {
   I.hope(Symbol()).is.finite;
   I.hope({}).is.finite;
 
-  I.sum();
+
 });

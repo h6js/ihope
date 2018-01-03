@@ -10,6 +10,6 @@ I.do('I.hope().has.own.property() :', function (I) {
   I.hope(worker).has.own.property('salary');
   I.hope(worker).has.no.own.property('age');
 
-  I.sum();
+
 });
 

@@ -9,7 +9,7 @@ I.do('I.hope().is.an.object :', function (I) {
   I.hope({}).is.not.an.object;
   I.hope(function () { }).is.an.object;
 
-  I.sum();
+
 });
 
 I.do('I.hope.is.an.Object :', function (I) {
@@ -36,5 +36,5 @@ I.do('I.hope.is.an.Object :', function (I) {
     I.hope(arguments).is.not.an.Object;
   })();
 
-  I.sum();
+
 });

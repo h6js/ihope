@@ -22,5 +22,5 @@ I.do('I.hope.a.Map :', function (I) {
     I.hope(arguments).is.a.Map;
   })();
 
-  I.sum();
+
 });

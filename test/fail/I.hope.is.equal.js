@@ -95,6 +95,6 @@ I.do('I.hope().is.equal() :', function (I) {
   I.hope({}).is.equal({});
   I.hope(function () { }).is.equal(function () { });
 
-  I.sum();
+
 });
 

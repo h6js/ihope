@@ -28,5 +28,5 @@ I.do('I.hope().is.an.instance.of() :', function (I) {
   I.hope({}).is.an.instance.of(undefined);
   I.hope({}).is.not.an.instance.of(undefined);
   
-  I.sum();
+
 });

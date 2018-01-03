@@ -13,5 +13,5 @@ I.do('I.hope().has.own.enumerable.property() :', function (I) {
   I.hope(123).has.own.enumerable.property('any');
   I.hope(123).has.no.own.enumerable.property('any');
 
-  I.sum();
+
 });

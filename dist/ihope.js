@@ -1,1 +1,1100 @@
-!function(t,n,e,r,o,i,u,a,f,c){function s(t,e,r,o){var i=Pt(lt);return i.parent=t,i.topic=e,i.func=r,i.timeout=o,i.dos=[],i.its=[],t?(i.indent=t.indent+"  ",i.path=t.path):(i.indent="",i.path=n?location.pathname:process.cwd()+"/"),i}function l(){var t,n=this,e=n.func,r=n.topic;if(n.timeout&&(r+=V("(#t%dms)",n.ms)),n.zero=Kt(),ct(e)?"$"!==e.name?(Q(Yt(r,n.parent.indent)),t=new c(function(t){t(e(n))})):t=new c(function(t){function i(t){t&&(u.fail=t instanceof f?t.message:o(t)),_(u)}var u=b(n.parent,r);n.parent.do=function(){u.end||(i(),lt.do.apply(n,arguments),t())},e(function(n){u.end||(i(n),t())})}):at(e)?(Q(Yt(r,n.parent.indent)),t=d(e,n)):ft(e)&&(Q(Yt(r,n.parent.indent)),t=e(n)),t)return t.then(K.bind(n)).then(h.bind(n.dos)).catch(p.bind(n))}function h(){for(var t,n=c.resolve(),e=0;t=this[e];e++)n=n.then(t);return n}function p(t){var n,e=this;if(t instanceof g){if(t.I!==e)throw t;n=Yt(V("#e⦸ Timeout Error: %dms!",t.I.timeout),t.I.indent)}else{n=V("#e⦸ Error:",t instanceof f?t.message:o(t));var r=J(t);r&&(n+="\n  "+r),n=Yt(n,e.indent)}Q(n),e.end=1}function g(t){this.I=t}function v(t){for(var n=t;n;){if(Kt()-n.zero>=n.timeout)throw new g(n);n=n.parent}return t}function d(t){var n=this,e=Jt(arguments,1);return new c(function(r,o){function i(n){var e;try{e=t.next(n)}catch(t){return o(t)}a(e)}function u(n){var e;try{e=t.throw(n)}catch(t){return o(t)}a(e)}function a(t){if(t.done)return r(t.value);var n=t.value;Vt(n)?n.then(i,u):i(n)}if("function"==typeof t&&(t=t.apply(n,e)),!t||"function"!=typeof t.next)return r(t);i()})}function m(){function t(t){return Number.isInteger(t=t/o*100)?"("+t+"%)":""}for(var n,e=this,r=e.its,o=r.length,i=0,u=0,a=0,f=0;f<o;f++){var c=r[f];c.end?c.fail?u++:i++:a++}n="#t✈#i",o&&(n+=V(" Total asserts: #t%d#i,",o),i&&(n+=V(" okey: #s%d%s#i,",i,t(i))),u&&(n+=V(" fail: #f%d%s#i,",u,t(u))),a&&(n+=V(" miss: #t%d%s#i,",a,t(a)))),n+=V(" duration: #t%d#ims.",Kt()-e.zero),Q(Yt(n,e.indent))}function y(t){var n=b(this);t||(n.fail="Assert failure!"),_(n)}function b(t,n,e){Et(K,t);var r=Pt(ht);r.parent=t;var o,i=U(2);return i&&(o=Rt(i.code),r.trace=i.trace),r.topic=n||o||"unknown testing",r.value=e,r.indent=t.indent,r.zero=Kt(),Xt(t.its,r),r}function w(t){return{get undefined(){return j(t,t.value===St,"undefined")},get null(){return j(t,null===t.value,"null")},get void(){return j(t,t.value===St||null===t.value,"void")},get ok(){return j(t,t.value,"ok")},get NaN(){return j(t,t.value!==t.value,"NaN")},get finite(){return j(t,Number.isFinite(t.value),"finite")},get a(){return S(t)},get an(){return S(t)},equal:function(n){k(t,W,"equal to",n)},get strict(){return{equal:function(n){k(t,H,"strict equal to",n)}}},get deep(){return{equal:function(n){A(t,W,"deep equal to",n)},get strict(){return{equal:function(n){A(t,H,"deep strict equal to",n)}}}}}}}function q(t){return{property:function(n){x(t,n)},get own(){return{property:function(n){P(t,n)},get enumerable(){return{property:function(n){z(t,n)}}}}},get enumerable(){return{property:function(n){T(t,n)}}}}}function S(t){return{get boolean(){F(t,"boolean")},get number(){F(t,"number")},get string(){F(t,"string")},get symbol(){F(t,"symbol")},get object(){F(t,"object")},get function(){F(t,"function")},get Object(){I(t,r)},get Function(){I(t,e)},get Boolean(){I(t,Boolean)},get Number(){I(t,Number)},get String(){I(t,o)},get Array(){I(t,i)},get RegExp(){I(t,u)},get Date(){I(t,a)},get Error(){I(t,f)},get Set(){I(t,Set)},get WeakSet(){I(t,WeakSet)},get Map(){I(t,Map)},get WeakMap(){I(t,WeakMap)},get Arguments(){N(t,"Arguments")},get Iterator(){E(t,Qt(t.value),"Iterator")},get Promise(){I(t,c)},get Generator(){N(t,"Generator")},get GeneratorFunction(){N(t,"GeneratorFunction")},get AsyncFunction(){N(t,"AsyncFunction")},get instance(){return{of:function(n){I(t,n)}}}}}function j(t,n,e){!n^t.no&&(t.fail=O(L(t.value),"is",t.no,e)),_(t)}function k(t,n,e,r){var o=t.value,i=t.no;if(!n(o,r)^i){var u=D(o);Ht(u,/^[A-Z]|symbol/)&&u===D(r)&&(e+=i?" the same":" another"),t.fail="hope "+L(o)+" is "+(i?"not ":"")+e+" "+L(r)+"."}_(t)}function A(t,n,e,r){var o,i=t.value,u=t.no;!!(o=Z(i,r,n))^u&&(t.fail="hope "+L(i)+" is "+(u?"not ":"")+e+" "+L(r)+".\n"+(o||"there is no different for "+e+".")),_(t)}function F(t,n){nt(t.value)!==n^t.no&&(t.fail=O(L(t.value),"is",t.no,"type as",n)),_(t)}function I(t,n){Y(n)?E(t,Y(n)&&t.value instanceof n,R(n)):(t.fail="Error: "+L(n)+" is not callable.",_(t))}function N(t,n){E(t,et(t.value)===n,n)}function E(t,n,e){!n^t.no&&(t.fail=O(L(t.value),"is",t.no,"an instance of",e)),_(t)}function O(t,n,e,r,o){return"Hope "+t+" "+n+(e?" not ":" ")+r+(o?" "+o:"")+"."}function x(t,n){G(t)&&B(t,n in t.value,"property",n)}function P(t,n){G(t)&&B(t,Mt(t.value,n),"own property",n)}function T(t,n){if(G(t)){var e=ot(t.value,n);B(t,e&&e.enumerable,"enumerable property",n)}}function z(t,n){if(G(t)){var e=$t(t.value,n);B(t,e&&e.enumerable,"own enumerable property",n)}}function B(t,n,e,r){var o=t.no;!n^o&&(t.fail="But "+L(t.value)+" has "+(o?"":"no ")+e+" "+Zt(r)+"."),_(t)}function G(t){return tt(t.value)||(t.fail="But "+L(t.value)+" is not an object!",_(t))}function M(t){return Y(t.value)||(t.fail="But "+L(t.value)+" is not a function!",_(t))}function $(t,n,e,r){function o(t,n){return"Hope"+(i?" not":"")+" throw "+(t&&t+" ")+"but throw "+(u?"nothing":n)+"."}var i=t.no,u=arguments.length<4;u?i||(t.fail=o(n?L(e):"",L(r))):n?Y(e)?!(r instanceof e)^i&&(t.fail=o(R(e)+" object",L(r))):it(e)?(e=Zt(e))!==(r=it(r)?Zt(r):tt(r)&&rt(r,"message")?Zt(r.message):L(r))^i&&(t.fail=o(e,r)):e!==r^i&&(t.fail=o(L(e),L(r))):i&&(t.fail=o("",L(r))),_(t)}function D(t){var n,e=nt(t);return"object"!==e&&"function"!==e||(e=(n=Tt(t))?Mt(n,"constructor")?R(n.constructor):et(t):"null prototype"),e}function R(t){return Y(t)?t.name||"[anonymous]":""}function W(t,n){return t==n}function H(t,n){return t===n}function L(t){var n=D(t);return"string"===n||"boolean"===n?n+=" "+Zt(t):"number"===n||"symbol"===n?n+=" "+o(t):"Date"===n||"String"===n||"Number"===n||"Boolean"===n?n+=" "+Zt(t.valueOf()):"null prototype"===n?n="object with "+n:"undefined"!==n&&"null"!==n&&(n+=" object"),n}function Z(t,n,e){function r(t){return Ht(t,/[a-zA-Z_$][\w$]*/)?"."+t:Ht(t,/^0$|^[1-9]\d*$/)?"["+t+"]":"["+Zt(t)+"]"}var o,i;if(!e(t,n)){if(!tt(t)||!tt(n))return": one is "+L(t)+", the other is "+L(n);if(ut(t)&&ut(n)&&(o=t.toString(),i=n.toString(),!e(o,i)))return": one is "+o+", the other is "+i+".";var u,a,f=[],c=[];u=0;for(f[u++]in t);a=u,u=0;for(c[u++]in n);u>a&&(a=u),f.sort(),c.sort();var s,l;for(u=0;u<a&&(s=f[u])===(l=c[u]);u++){var h=Z(o=t[s],i=n[l],e);if(h)return r(s)+h}if(s!==l){if(s<l||l===St)return r(s)+": one is "+L(t[s])+", the other is absent.";if(l<s||s===St)return r(l)+": one is absent, the other is "+L(n[l])+"."}}}function C(t){for(var n,e=Lt(f().stack,"\n"),r=0;(n=e[r++])&&!Ht(n,dt););if(r<e.length){var o=Ht(e[r+t],mt);if(o)return{trace:o[0],loc:o[1],row:o[2]-1,col:o[3]-1}}}function J(t){var n=t.stack;if(n){n=Lt(n,"\n");for(var e,r=0;e=n[r++];){var o=Ht(e,yt);if(o)return o[0]}}}function U(t){var n,e,r;if(t+=1,(n=C(t))&&(e=X(n.loc))&&(r=e[n.row]))return{code:r,trace:n.trace}}function X(t){return Mt(bt,t)?bt[t]:bt[t]=Lt(st(t),"\n")}function _(t){if(!(t.end=t.parent.end)){var n=t.topic;t.ms&&(n+=V(" (timeout #m%dms)",t.ms)),n=t.fail?V("#f✘ %s\n#e%s%s",n,Yt(t.fail,"  "),t.trace?"\n"+Yt(t.trace,"  #m"):""):V("#s✔ %s",n),Q("%s",Yt(n,t.indent)),t.end=1}}function K(){var t=this,n=t.its[t.its.length-1];if(n&&!n.func&&!n.end){var e="#t• "+n.topic;n.trace&&(e+=Yt("\n#e"+n.trace,"  ")),Q(Yt(e,n.indent))}}function Q(t){var n=arguments;t=Ot(V,St,n),n.length=1,n[0]=Wt(t,wt,gt.bind(n))+vt[0],Ot(console.log,console,n)}function V(t){var n=arguments,e=n.length,r=1;for(t=Wt(t,qt,function(t){return r<e?n[r++]:t});r<e;r++)t+=" "+n[r];return t}function Y(t){return"function"==typeof t}function tt(t){return r(t)===t}function nt(t){return null===t?"null":typeof t}function et(t){return Wt(Et(xt.toString,t),Gt,"")}function rt(t,n){for(;t;){if(Mt(t,n))return t;t=Tt(t)}}function ot(t,n){for(var e;t;){if(e=$t(t,n))return e;t=Tt(t)}}function it(t){return"string"==typeof t}function ut(t){return t instanceof u}function at(t){return"GeneratorFunction"===et(t)}function ft(t){return"AsyncFunction"===et(t)}function ct(t){return"Function"===et(t)}var st,lt={do:function(t,n,e){Xt(this.dos,Nt(l,s(this,t,n,e)))},log:function(t){var n=v(this);t=Ot(V,St,arguments),Q(Yt(t,n.indent))},delay:function(t){for(var n=v(this);n;){var e=n.timeout+n.zero-Kt();e<t&&(t=e),n=n.parent}return t>=0?new c(function(n){setTimeout(n,t)}):c.resolve()},sum:function(){Xt(this.dos,Nt(m,this))},assert:function(t){if(!t)throw f("Assert failure!")},sure:y,get am(){return{sure:Nt(y,this)}},hope:function(t){var n=b(this,"",t);return arguments.length>1&&(n.args=Jt(arguments,1)),n},say:function(t){var n=b(this,t);return{if:function(t){t||(n.fail="Assert failure!"),_(n)},as:function(t){return n.value=t,n},on:function(t){try{t()}catch(t){n.fail="Throw "+o(t)}_(n)}}}},ht={get be(){return this},get is(){var t=this,n=zt(w(t),S(t));return zt({get not(){return t.no=1,n}},n)},get not(){return this.no=!this.no,this},equal:function(t){k(this,W,"equals",t)},get strict(){var t=this;return{equal:function(n){k(t,H,"strict equals",n)}}},get deep(){var t=this;return{equal:function(n){A(t,W,"deep equals",n)},get strict(){return{equal:function(n){A(t,H,"deep strict equals",n)}}}}},get a(){return S(this)},get has(){var t=this,n=q(t);return zt({get not(){return t.no=1,n},get no(){return t.no=1,n}},n)},throw:function(){var t,n,e=this,r=e.value,o=arguments;if((t=o.length)&&(n=o[0]),o=e.args,M(e))if(ct(r))try{Ot(r,St,o),$(e,t,n)}catch(r){$(e,t,n,r)}else{if(at(r))return Ot(d,St,union([r],o)).then(function(){$(e,t,n)}).catch(function(r){$(e,t,n,r)});if(ft(r))return Ot(r,St,o).then(function(){$(e,t,n)}).catch(function(r){$(e,t,n,r)})}}};if(n)st=function(t){var n=new XMLHttpRequest;return n.open("GET",t,!1),n.send(),n.status/100^2?"":n.responseText};else{var pt=require("fs");st=function(t){return pt.readFileSync(t,{encoding:"utf-8"})}}var gt,vt,dt=u("\\b"+C.name+"\\b"),mt=/((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./-]+(?:\?.*|)):(\d+):(\d+)/,yt=/((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./-]+(?:\?.*|)):(\d+):(\d+)/,bt={};n?console.msIsIndependentlyComposed?(vt=[""],gt=function(t,n){return""}):(vt={0:"",i:"color:lightgray",s:"color:lawngreen;font-weight:900",f:"color:tomato;font-weight:900",e:"color:red",t:"color:royalblue;font-weight:900",m:"color:darkgrey"},gt=function(t,n){return(n=vt[n])?(Xt(this,n),"%c"):""}):(vt={0:"[0m",i:"[0m[37m",s:"[1m[32m",f:"[1m[31m",e:"[0m[31m",t:"[1m[34m",m:"[1m[30m"},gt=function(t,n){return vt[n]||""});var wt=/#(\w)/g,qt=/%[sd]/g;!function(){function n(t,n){var r=Ht(t,o);return r&&!r[1]&&(n=Ht(n,i))&&("/"!==(t=r[2])[0]&&(t=n[2]+t),t=n[1]+e(t)+r[3]),t}function e(t){for(var n=[],e=0,r=(t=Lt(t,u)).length;e<r;e++){var o=t[e];if(n.length){if("."!==o){var i=n[n.length-1];".."!==o?("."===i&&o&&_t(n),Xt(n,o)):".."===i?Xt(n,o):i&&_t(n)}}else Xt(n,o)}return n.join("/")}lt.get=function(t){return t=n(t,this.path),st(t)};var r={};lt.js=function(e){if(e=n(e,this.path),!r[e]){r[e]=1;var o=st(e)+"\n//# sourceURL="+e,i=this.path;this.path=e;try{t.eval(o)}finally{this.path=i}}};var o=/^(https?:\/\/[\w-.]+(?::\d+)?|)([\w\/.-]+)(.*|)/,i=/^(https?:\/\/[\w-.]+(?::\d+)?|)(\/(?:[\w.-]+\/)*)/,u=/\/+/}();var St,jt=e.prototype,kt=jt.call,At=jt.apply,Ft=jt.bind,It=kt.bind(Ft,kt),Nt=It(Ft),Et=It(kt),Ot=It(At),xt=r.prototype,Pt=r.create,Tt=r.getPrototypeOf,zt=r.setPrototypeOf,Bt=xt.isPrototypeOf,Gt=/\[object |\]/g,Mt=It(xt.hasOwnProperty),$t=r.getOwnPropertyDescriptor,Dt=o.prototype,Rt=It(Dt.trim),Wt=It(Dt.replace),Ht=It(Dt.match),Lt=It(Dt.split),Zt=JSON.stringify,Ct=i.prototype,Jt=It(Ct.slice),Ut=It(Ct.splice),Xt=It(Ct.push),_t=It(Ct.pop),Kt=a.now,Qt=Nt(Bt,Tt(Tt(""[Symbol.iterator]()))),Vt=Nt(Bt,c.prototype),Yt=function(t,n){return function(){for(var e=arguments,r=0;r<n.length;r++)r in n&&Ut(e,r,0,n[r]);return t.apply(this,e)}}(Wt,[,/^/gm]);!function(){var e,r;n?(e=new c(Nt(addEventListener,t,"load")),t.I=r=s(null,"")):(e=new c(process.nextTick),module.exports=r=s(null,"")),e.then(Nt(h,r.dos)).catch(Nt(p,r))}()}(this.window||global,this.window,Function,Object,String,Array,RegExp,Date,Error,Promise);
+/** ihope.js -----------------------------------------------------------------------------------------------------------
+ * The most simplest test library in the world for JavaScript.
+ */
+
+/** -----------------------------------------------------------------------------------------------
+ * lib.js
+ */
+
+var undefined;
+
+/** --------------------------------------------------------------------------
+ * Function
+ */
+var nop = Function.prototype;
+var _call = nop.call;
+var _apply = nop.apply;
+var _bind = nop.bind;
+var func = _call.bind(_bind, _call);
+var bind = func(_bind);
+var call = func(_call);
+var apply = func(_apply);
+
+function isFunction(any) {
+  return typeof any === 'function';
+}
+
+  /** --------------------------------------------------------------------------
+   * Object
+   */
+  var Object_prototype = Object.prototype;
+  var create = Object.create;
+  var getPrototype = Object.getPrototypeOf;
+  var setPrototype = Object.setPrototypeOf;
+  var _isPrototypeOf = Object_prototype.isPrototypeOf;
+
+  function isObject(any) {
+    return Object(any) === any;    // typeof any === 'object' && any !== nil;
+  }
+
+  function genusof(any) {
+    return any === null ? "null" : typeof any;
+  }
+
+  var reTrimTag = /\[object |\]/g;
+  function tagof(any) {
+    return replace(call(Object_prototype.toString, any), reTrimTag, '');
+  }
+
+  var hasOwnProperty = func(Object_prototype.hasOwnProperty);
+  var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+  function hasProperty(obj, prop) {
+    while (obj) {
+      if (hasOwnProperty(obj, prop))
+        return obj;
+      obj = getPrototype(obj);
+    }
+  }
+
+  function getPropertyDescriptor(obj, prop) {
+    var desc;
+    while (obj) {
+      if (desc = getOwnPropertyDescriptor(obj, prop))
+        return desc;
+      obj = getPrototype(obj);
+    }
+  }
+
+  /** --------------------------------------------------------------------------
+   * String
+   */
+  var String_prototype = String.prototype;
+
+  function isString(any) {
+    return typeof any === 'string';
+  }
+
+  var trim = func(String_prototype.trim);
+  var replace = func(String_prototype.replace);
+  var match = func(String_prototype.match);
+  var split = func(String_prototype.split);
+  var stringify = JSON.stringify;
+
+  /** --------------------------------------------------------------------------
+   * Array
+   */
+  var Array_prototype = Array.prototype;
+  var piece = func(Array_prototype.slice);
+  var splice = func(Array_prototype.splice);
+  var push = func(Array_prototype.push);
+  var pop = func(Array_prototype.pop);
+
+  /** --------------------------------------------------------------------------
+   * RegExp
+   */
+  function isRegExp(any) {
+    return any instanceof RegExp;
+  }
+
+  /** --------------------------------------------------------------------------
+   * Date
+   */
+  var now = Date.now;
+
+  /** --------------------------------------------------------------------------
+   * Iterator, Promise, Generator, Async Function
+   */
+  var isIterator = bind(_isPrototypeOf, getPrototype(getPrototype(''[Symbol.iterator]())));
+  var isPromise = bind(_isPrototypeOf, Promise.prototype);
+
+  function isGeneratorFunction(any) {
+    return tagof(any) === 'GeneratorFunction';
+  }
+
+  function isAsyncFunction(any) {
+    return tagof(any) === 'AsyncFunction';
+  }
+
+  function isSyncFunction(any) {
+    return tagof(any) === 'Function';
+  }
+
+  /** indent(code, spaces) 缩进代码行 */
+  function indent(code, spaces) {
+    return code.replace(/^/gm, spaces);
+  }
+
+
+/** -----------------------------------------------------------------------------------------------
+ * remote.js
+ */
+
+function remote(oper, value){
+  var xhr = new XMLHttpRequest;
+  var url = location.protocol + "//" + location.host + "//";
+
+  remote = function (oper, value) {
+    xhr.open("GET", url, false);
+    xhr.setRequestHeader("oper", oper);
+    xhr.setRequestHeader("value", encodeURIComponent(value));
+    xhr.send();
+  }
+  return remote(oper, value);
+};
+
+
+/** -----------------------------------------------------------------------------------------------
+ * log.js
+ */
+
+function report(it) {
+  if (!(it.end = it.parent.end)) {
+    var s = it.topic;
+    if (it.ms) {
+      s += format(" (timeout #m%dms)", it.ms);
+    }
+    if (it.fail) {
+      s = format("#f✘ %s\n#e%s%s", s, indent(it.fail, "  "), it.trace ? "\n" + indent(it.trace, "  #m") : "");
+    }
+    else {
+      s = format("#s✔ %s", s);
+    }
+    log("%s", indent(s, it.indent));
+    it.end = 1;
+  }
+}
+
+function review() {
+  var me = this, it = me.its[me.its.length - 1];
+  if (it && !it.func && !it.end) {
+    var s = '#t• ' + it.topic;
+    if (it.trace)
+      s += indent('\n#e' + it.trace, '  ');
+    log(indent(s, it.indent));
+  }
+}
+
+function log() {
+  print(format.apply(undefined, arguments));
+}
+
+const print = this.window
+  ? function (s) {
+    remote("log", textcolor(s))
+    console.log.apply(console, argscolor(arguments));
+  }
+  : function (s) {
+    console.log(textcolor(s));
+  };
+
+const textcolors = {
+  0: "\x1b[0m",
+  i: "\u001b[0m\u001b[37m",
+  s: "\u001b[1m\u001b[32m",
+  f: "\u001b[1m\u001b[31m",
+  e: "\u001b[0m\u001b[31m",
+  t: "\u001b[1m\u001b[34m",
+  m: "\u001b[1m\u001b[30m"
+};
+
+function textcolor(text) {
+  return replace(text, /#\w/g, (s)=>textcolors[s[1]]||textcolors[0])+textcolors[0];
+}
+
+const argscolors = {
+  0: "",
+  i: "color:lightgray",
+  s: "color:lawngreen;font-weight:900",
+  f: "color:tomato;font-weight:900",
+  e: "color:red",
+  t: "color:royalblue;font-weight:900",
+  m: "color:darkgrey"
+};
+
+function argscolor(args) {
+  var i=1;
+  args[0] = replace(args[0], /#\w/g, (s)=>(args[i++]=argscolors[s[1]] || "" ,"%c"));
+  args.length = i;
+  return args;
+}
+
+function format(s) {
+  var i=1, args = arguments;
+  return replace(s, /%[sd]/g, function(s){
+    return i<args.length ? args[i++] : s;
+  });
+}
+
+/** -----------------------------------------------------------------------------------------------
+ * trace.js
+ */
+
+/** get(path) 获取文本资源 */
+var get;
+
+if (this.window) {
+  get = function (path) {
+    var http = new XMLHttpRequest;
+    http.open('GET', path, false);
+    http.send();
+    return http.status / 100 ^ 2 ? '' : http.responseText;
+  };
+}
+else {
+  const fs = require('fs');
+  get = function (path) {
+    return fs.readFileSync(path, { encoding: 'utf-8' });
+  };
+}
+
+var reWhere = RegExp('\\b' + where.name + '\\b');
+var reHere = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./-]+(?:\?.*|)):(\d+):(\d+)/;
+function where(deep) {
+  var stack = split(Error().stack, "\n");
+  for (var i = 0, line; line = stack[i++];) {
+    if (match(line, reWhere)) break;
+  }
+  if (i < stack.length) {
+    var ms = match(stack[i + deep], reHere);
+    if (ms)
+      return {
+        trace: ms[0],
+        loc: ms[1],
+        row: ms[2] - 1,
+        col: ms[3] - 1
+      };
+  }
+}
+
+var reTrace = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./-]+(?:\?.*|)):(\d+):(\d+)/;
+function getTrace(error) {
+  var stack = error.stack;
+  if (stack) {
+    stack = split(stack, "\n");
+    for (var i = 0, item; item = stack[i++];) {
+      var ms = match(item, reTrace);
+      if (ms) return ms[0];
+    }
+  }
+}
+
+function getLine(deep) {
+  var here, rows, row;
+  deep += 1;
+  if (here = where(deep)) {
+    if (rows = getRows(here.loc)) {
+      if (row = rows[here.row]) {
+        return { code: row, trace: here.trace }
+      }
+    }
+  }
+}
+
+var cachedRows = {};
+function getRows(loc) {
+  var rows;
+  if (hasOwnProperty(cachedRows, loc)) {
+    rows = cachedRows[loc];
+  }
+  else {
+    rows = cachedRows[loc] = split(get(loc), "\n");
+  }
+  return rows;
+}
+
+
+
+/** -----------------------------------------------------------------------------------------------
+ * assert.js
+ */
+
+function assert(assert) {
+  var it = newIt(this);
+  if (!assert)
+    it.fail = 'Assert failure!';
+  report(it);
+}
+
+function hope(value) {
+  var it = newIt(this, "", value);
+  if (arguments.length > 1)
+    it.args = piece(arguments, 1);
+  return it;
+}
+
+function newIt(parent, topic, value) {
+  call(review, parent);
+  var it = create(itProto);
+  it.parent = parent;
+  var line = getLine(2), code;
+  if (line) {
+    code = trim(line.code);
+    it.trace = line.trace;
+  }
+  it.topic = topic || code || "unknown testing"
+  it.value = value;
+  it.indent = parent.indent;
+  it.zero = now();
+  push(parent.its, it);
+  return it;
+}
+
+var itProto = {
+  get be() { return this },
+  get is() {
+    var me = this;
+    var is = setPrototype(newIs(me), newA(me));
+    return setPrototype({ get not() { me.no = 1; return is } }, is);
+  },
+  get not() {
+    this.no = !this.no;
+    return this;
+  },
+
+  equal: function (expect) { assertEqual(this, normalEqual, 'equals', expect) },
+
+  get strict() {
+    var me = this;
+    return {
+      equal: function (expect) { assertEqual(me, strictEqual, 'strict equals', expect) }
+    }
+  },
+
+  get deep() {
+    var me = this;
+    return {
+      equal: function (expect) { assertDeepEqual(me, normalEqual, 'deep equals', expect) },
+      get strict() {
+        return {
+          equal: function (expect) { assertDeepEqual(me, strictEqual, 'deep strict equals', expect) }
+        }
+      }
+    }
+  },
+
+  get a() { return newA(this) },
+
+  get has() {
+    var me = this;
+    var has = newHas(me);
+    return setPrototype({ get not() { me.no = 1; return has }, get no() { me.no = 1; return has } }, has);
+  },
+  throw: function () {
+    var me = this, value = me.value, args = arguments, specified, error;
+    if (specified = args.length) error = args[0];
+    args = me.args;
+    if (assertFunction(me)) {
+      if (isSyncFunction(value)) {
+        try {
+          apply(value, undefined, args);
+          assertThrow(me, specified, error);
+        }
+        catch (except) {
+          assertThrow(me, specified, error, except);
+        }
+      }
+      else if (isGeneratorFunction(value)) {
+        return apply(go, undefined, union([value], args))
+          .then(function () {
+            assertThrow(me, specified, error);
+          })
+          .catch(function (except) {
+            assertThrow(me, specified, error, except);
+          });
+      }
+      else if (isAsyncFunction(value)) {
+        return apply(value, undefined, args)
+          .then(function () {
+            assertThrow(me, specified, error);
+          })
+          .catch(function (except) {
+            assertThrow(me, specified, error, except);
+          });
+      }
+    }
+  }
+};
+
+function newIs(me) {
+  return {
+    get undefined() { return assertValue(me, me.value === undefined, 'undefined') },
+    get null() { return assertValue(me, me.value === null, 'null') },
+    get void() { return assertValue(me, me.value === undefined || me.value === null, 'void') },
+    get ok() { return assertValue(me, me.value, 'ok') },
+    get NaN() { return assertValue(me, me.value !== me.value, 'NaN') },
+    get finite() { return assertValue(me, Number.isFinite(me.value), 'finite') },
+    get a() { return newA(me) },
+    get an() { return newA(me) },
+    equal: function (expect) { assertEqual(me, normalEqual, 'equal to', expect) },
+    get strict() {
+      return {
+        equal: function (expect) { assertEqual(me, strictEqual, 'strict equal to', expect) }
+      }
+    },
+    get deep() {
+      return {
+        equal: function (expect) { assertDeepEqual(me, normalEqual, 'deep equal to', expect) },
+        get strict() {
+          return {
+            equal: function (expect) { assertDeepEqual(me, strictEqual, 'deep strict equal to', expect) }
+          }
+        }
+      }
+    },
+  };
+}
+
+function newHas(me) {
+  return {
+    property: function (property) { assertHasProperty(me, property) },
+    get own() {
+      return {
+        property: function (property) { assertHasOwnProperty(me, property) },
+        get enumerable() {
+          return {
+            property: function (property) { assertHasOwnEnumerableProperty(me, property) }
+          }
+        }
+      }
+    },
+    get enumerable() {
+      return {
+        property: function (property) { assertHasEnumerableProperty(me, property) }
+      }
+    }
+  }
+}
+
+function newA(me) {
+  return {
+    get boolean() { assertType(me, 'boolean') },
+    get number() { assertType(me, 'number') },
+    get string() { assertType(me, 'string') },
+    get symbol() { assertType(me, 'symbol') },
+    get object() { assertType(me, 'object') },
+    get function() { assertType(me, 'function') },
+    get Object() { assertInstance(me, Object) },
+    get Function() { assertInstance(me, Function) },
+    get Boolean() { assertInstance(me, Boolean) },
+    get Number() { assertInstance(me, Number) },
+    get String() { assertInstance(me, String) },
+    get Array() { assertInstance(me, Array) },
+    get RegExp() { assertInstance(me, RegExp) },
+    get Date() { assertInstance(me, Date) },
+    get Error() { assertInstance(me, Error) },
+    get Set() { assertInstance(me, Set) },
+    get WeakSet() { assertInstance(me, WeakSet) },
+    get Map() { assertInstance(me, Map) },
+    get WeakMap() { assertInstance(me, WeakMap) },
+    get Arguments() { assertTag(me, 'Arguments') },
+    get Iterator() { assertInstanceOf(me, isIterator(me.value), 'Iterator') },
+    get Promise() { assertInstance(me, Promise) },
+    get Generator() { assertTag(me, 'Generator') },
+    get GeneratorFunction() { assertTag(me, 'GeneratorFunction') },
+    get AsyncFunction() { assertTag(me, 'AsyncFunction') },
+    get instance() { return { of: function (type) { assertInstance(me, type) } } }
+  };
+}
+
+function assertValue(it, assert, verb) {
+  if (!assert ^ it.no)
+    it.fail = disappoint(textify(it.value), 'is', it.no, verb);
+  report(it);
+}
+
+function assertEqual(it, compare, verb, expect) {
+  var value = it.value, not = it.no, assert;
+  assert = compare(value, expect);
+  if (!assert ^ not) {
+    var type = typeclass(value);
+    if (match(type, /^[A-Z]|symbol/) && type === typeclass(expect))
+      verb += not ? ' the same' : ' another';
+    it.fail = "hope " + textify(value) + ' is ' + (not ? 'not ' : '') + verb + ' ' + textify(expect) + '.';
+  }
+  report(it);
+}
+
+function assertDeepEqual(it, compare, verb, expect) {
+  var value = it.value, not = it.no, assert, dif;
+  dif = diff(value, expect, compare);
+  if (!!dif ^ not)
+    it.fail = "hope " + textify(value) + ' is ' + (not ? 'not ' : '') + verb + ' ' + textify(expect) + '.'
+      + '\n' + (dif ? dif : 'there is no different for ' + verb + '.');
+  report(it);
+}
+
+
+
+function assertType(it, type) {
+  if ((genusof(it.value) !== type) ^ it.no)
+    it.fail = disappoint(textify(it.value), 'is', it.no, 'type as', type);
+  report(it);
+}
+
+function assertInstance(it, type) {
+  if (isFunction(type)) {
+    assertInstanceOf(it, isFunction(type) && it.value instanceof type, funcname(type));
+  }
+  else {
+    it.fail = 'Error: ' + textify(type) + ' is not callable.';
+    report(it);
+  }
+}
+
+function assertTag(it, type) {
+  assertInstanceOf(it, tagof(it.value) === type, type);
+}
+
+function assertInstanceOf(it, assert, type) {
+  if (!assert ^ it.no)
+    it.fail = disappoint(textify(it.value), 'is', it.no, 'an instance of', type);
+  report(it);
+}
+
+function disappoint(one, vi, not, vt, other) {
+  return 'Hope ' + one + ' ' + vi + (not ? ' not ' : ' ') + vt + (other ? ' ' + other : '') + '.';
+}
+
+function assertHasProperty(it, property) {
+  if (assertObject(it)) {
+    assertProperty(it, property in it.value, 'property', property);
+  }
+}
+
+function assertHasOwnProperty(it, property) {
+  if (assertObject(it)) {
+    assertProperty(it, hasOwnProperty(it.value, property), 'own property', property);
+  }
+}
+
+function assertHasEnumerableProperty(it, property) {
+  if (assertObject(it)) {
+    var desc = getPropertyDescriptor(it.value, property);
+    assertProperty(it, desc && desc.enumerable, 'enumerable property', property);
+  }
+}
+
+function assertHasOwnEnumerableProperty(it, property) {
+  if (assertObject(it)) {
+    var desc = getOwnPropertyDescriptor(it.value, property);
+    assertProperty(it, desc && desc.enumerable, 'own enumerable property', property);
+  }
+}
+
+function assertProperty(it, assert, verb, property) {
+  var no = it.no;
+  if (!assert ^ no)
+    it.fail = 'But ' + textify(it.value) + ' has ' + (no ? '' : 'no ') + verb + ' ' + stringify(property) + '.';
+  report(it);
+}
+
+function assertObject(it) {
+  return isObject(it.value) || (it.fail = 'But ' + textify(it.value) + ' is not an object!', report(it));
+}
+
+function assertFunction(it) {
+  return isFunction(it.value) || (it.fail = 'But ' + textify(it.value) + ' is not a function!', report(it))
+}
+
+function assertThrow(it, specified, error, except) {
+  var not = it.no, ok = arguments.length < 4;
+
+  if (ok) {
+    if (!not)
+      it.fail = fail(specified ? textify(error) : '', textify(except));
+  }
+  else if (specified) {
+    if (isFunction(error)) {
+      if (!(except instanceof error) ^ not)
+        it.fail = fail(funcname(error) + ' object', textify(except));
+    }
+    else if (isString(error)) {
+      error = stringify(error);
+      if (isString(except)) {
+        except = stringify(except);
+      }
+      else if (isObject(except)) {
+        if (hasProperty(except, 'message')) {
+          except = stringify(except.message);
+        }
+        else {
+          except = textify(except);
+        }
+      }
+      else {
+        except = textify(except);
+      }
+      if ((error !== except) ^ not)
+        it.fail = fail(error, except);
+    }
+    else if ((error !== except) ^ not) {
+      it.fail = fail(textify(error), textify(except));
+    }
+  }
+  else if (not) {
+    it.fail = fail('', textify(except));
+  }
+  report(it);
+
+  function fail(error, except) { return 'Hope' + (not ? ' not' : '') + ' throw ' + (error && error + ' ') + 'but throw ' + (ok ? 'nothing' : except) + '.' };
+}
+
+function typeclass(any) {
+  var type = genusof(any), proto;
+  if (type === 'object' || type === 'function') {
+    if (proto = getPrototype(any)) {
+      if (hasOwnProperty(proto, 'constructor')) {
+        type = funcname(proto.constructor);
+      }
+      else {
+        type = tagof(any);
+      }
+    }
+    else {
+      type = 'null prototype';
+    }
+  }
+  return type;
+}
+
+function funcname(any) {
+  return isFunction(any) ?
+    any.name || '[anonymous]' : '';
+}
+
+function normalEqual(a, b) { return a == b }
+
+function strictEqual(a, b) { return a === b }
+
+function textify(any) {
+  var s = typeclass(any);
+  if (s === 'string' || s === 'boolean') {
+    s += ' ' + stringify(any);
+  }
+  else if (s === 'number' || s === 'symbol') {
+    s += ' ' + String(any);
+  }
+  else if (s === 'Date' || s === 'String' || s === 'Number' || s === 'Boolean') {
+    s += ' ' + stringify(any.valueOf());
+  }
+  else if (s === 'null prototype') {
+    s = 'object with ' + s;
+  }
+  else if (s !== 'undefined' && s !== 'null') {
+    s += ' object';
+  }
+  return s;
+}
+
+function diff(a, b, equal) {
+  var aValue, bValue;
+  if (!equal(a, b)) {
+    if (isObject(a) && isObject(b)) {
+      if (isRegExp(a) && isRegExp(b)) {
+        aValue = a.toString(), bValue = b.toString();
+        if (!equal(aValue, bValue))
+          return ': one is ' + aValue + ', the other is ' + bValue + '.';
+      }
+      var aKeys = [], bKeys = [], i, length;
+      i = 0;
+      for (aKeys[i++] in a);
+      length = i;
+      i = 0;
+      for (bKeys[i++] in b);
+      if (i > length)
+        length = i;
+      aKeys.sort();
+      bKeys.sort();
+      var aKey, bKey;
+      for (i = 0; i < length && (aKey = aKeys[i]) === (bKey = bKeys[i]); i++) {
+        aValue = a[aKey], bValue = b[bKey];
+        var dif = diff(aValue, bValue, equal);
+        if (dif) {
+          return propexp(aKey) + dif;
+        }
+      }
+      if (aKey !== bKey) {
+        if (aKey < bKey || bKey === undefined) {
+          return propexp(aKey) + ': one is ' + textify(a[aKey]) + ', the other is absent.';
+        }
+        if (bKey < aKey || aKey === undefined) {
+          return propexp(bKey) + ': one is absent, the other is ' + textify(b[bKey]) + '.';
+        }
+      }
+    }
+    else {
+      return ': one is ' + textify(a) + ', the other is ' + textify(b);
+    }
+  }
+
+  function propexp(prop) {
+    if (match(prop, /[a-zA-Z_$][\w$]*/))
+      return '.' + prop;
+    if (match(prop, /^0$|^[1-9]\d*$/))
+      return '[' + prop + ']';
+    return '[' + stringify(prop) + ']';
+  }
+}
+
+
+/** -----------------------------------------------------------------------------------------------
+ * go.js
+ */
+
+function go(gen) {
+  var self = this;
+  var args = piece(arguments, 1);
+
+  return new Promise(function (resolve, reject) {
+    if (typeof gen === "function")
+      gen = gen.apply(self, args);
+    if (!gen || typeof gen.next !== "function")
+      return resolve(gen);
+
+    goon();
+
+    function goon(value) {
+      var state;
+      try {
+        state = gen.next(value);
+      }
+      catch (e) {
+        return reject(e);
+      }
+      next(state);
+    }
+
+    function stop(err) {
+      var state;
+      try {
+        state = gen.throw(err);
+      }
+      catch (e) {
+        return reject(e);
+      }
+      next(state);
+    }
+
+    function next(state) {
+      if (state.done)
+        return resolve(state.value);
+      var value = state.value;
+      if (isPromise(value)) {
+        value.then(goon, stop);
+      }
+      else {
+        goon(value);
+      }
+    }
+  })
+}
+
+
+/** -----------------------------------------------------------------------------------------------
+ * run.js
+ */
+
+function Timeout(I) {
+  this.I = I;
+}
+
+function checktime(me) {
+  var I = me;
+  while (I) {
+    if (now() - I.zero >= I.timeout) {
+      throw new Timeout(I);
+    }
+    I = I.parent;
+  }
+  return me;
+}
+
+async function run() {
+  var me = this, func = me.func;
+  var topic = me.topic;
+  if (me.timeout)
+    topic += format("(#t%dms)", me.ms);
+  me.zero = now();
+  try {
+    if (isSyncFunction(func)) {
+      if (func.name !== '$') {
+        print(indent(topic, me.parent.indent));
+        func(me);
+      }
+      else {
+        await new Promise(function (goon) {
+          var it = newIt(me.parent, topic);
+          me.parent.do = function () {
+            if (!it.end) {
+              reporting();
+              iProto.do.apply(me, arguments);
+              goon();
+            }
+          }
+          func(done);
+
+          function done(err) {
+            if (!it.end) {
+              reporting(err);
+              goon();
+            }
+          }
+          function reporting(err) {
+            if (err) {
+              it.fail = err instanceof Error ? err.message : String(err);
+            }
+            report(it);
+          }
+        });
+      }
+    }
+    else if (isGeneratorFunction(func)) {
+      print(indent(topic, me.parent.indent));
+      await go(func, me);
+    }
+    else if (isAsyncFunction(func)) {
+      print(indent(topic, me.parent.indent));
+      await func(me);
+    }
+
+    var us = me.us;
+    for (var i = 0; i < us.length; i++)
+      await us[i].run();
+    sum(me);
+  }
+  catch (err) {
+    var s;
+    if (err instanceof Timeout) {
+      if (err.I !== me) throw err;  // 若不是本层任务超时，则抛出至上层处理。
+      s = indent(format('#e⦸ Timeout Error: %dms!', err.I.timeout), err.I.indent);
+    }
+    else {
+      s = format('#e⦸ %s: %s', err.name, err.message);
+      var trace = getTrace(err);
+      if (trace)
+        s += "\n  " + trace;
+      s = indent(s, me.indent);
+    }
+    print(s);
+    me.end = 1;
+  }
+}
+
+function sum(me) {
+  var its = me.its, s;
+  for (var total = its.length, okey = 0, fail = 0, miss = 0, i = 0; i < total; i++) {
+    var it = its[i];
+    if (it.end) {
+      if (it.fail) {
+        fail++;
+      }
+      else {
+        okey++;
+      }
+    }
+    else {
+      miss++;
+    }
+  }
+  s = "#t✈#i Total";
+  if (total) {
+    s += format(" asserts: #t%d#i,", total);
+    if (okey) {
+      s += format(' okey: #s%d%s#i,', okey, rate(okey));
+    }
+    if (fail) {
+      s += format(' fail: #f%d%s#i,', fail, rate(fail));
+    }
+    if (miss) {
+      s += format(' miss: #t%d%s#i,', miss, rate(miss));
+    }
+  }
+
+  s += format(" duration: #t%d#ims.", now() - me.zero);
+  print(indent(s, me.indent));
+
+  function rate(value) {
+    return Number.isInteger(value = value / total * 100) ? '(' + value + '%)' : '';
+  }
+}
+
+function errors(me) {
+  var errs = 0, its = me.its, us = me.us;
+  for (var i = 0; i < its.length; i++) {
+    var it = its[i];
+    if (it.end) {
+      if (it.fail)
+        errs++;
+    }
+    else {
+      errs++;
+    }
+  }
+  for(var i=0; i<us.length; i++)
+    errs += errors(us[i]);
+  return errs;
+} 
+
+/** -----------------------------------------------------------------------------------------------
+ * i.js
+ */
+
+function newI(parent, topic, func, timeout) {
+  var I = create(iProto);
+  I.parent = parent;
+  I.topic = topic;
+  I.func = func;
+  I.timeout = timeout;
+  I.us = [];
+  I.its = [];
+  if (parent) {
+    I.indent = parent.indent + "  ";
+    I.path = parent.path;
+  }
+  else {
+    I.indent = "";
+  }
+  return I;
+}
+
+const iProto = {
+  do: function (topic, func, timeout) {
+    push(this.us, newI(this, topic, func, timeout));
+  },
+
+  log: function (s) {
+    var me = checktime(this);
+    s = apply(format, undefined, arguments);
+    print(indent(s, me.indent));
+  },
+
+  delay: async function (ms) {
+    var me = checktime(this);
+    var I = me;
+    while (I) {
+      var left = I.timeout + I.zero - now();
+      if (left < ms)
+        ms = left;
+      I = I.parent;
+    }
+    if (ms >= 0)
+      await new Promise(function (resolve) {
+        setTimeout(resolve, ms);
+      });
+  },
+  assert: assert,
+  get am() {
+    var me = this;
+    return { sure: bind(assert, me) };
+  },
+  hope: hope,
+  say: say,
+  run: run
+};
+
+function say(topic) {
+  var me = this;
+  var it = newIt(me, topic);
+  return {
+    if: function (assert) {
+      if (!assert)
+        it.fail = 'Assert failure!';
+      report(it);
+    },
+    as: function (value) {
+      it.value = value;
+      return it;
+    },
+    on: function on(func) {
+      try {
+        func();
+      }
+      catch (err) {
+        it.fail = 'Throw ' + String(err);
+      }
+      report(it);
+    }
+  };
+}
+
+
+/** -----------------------------------------------------------------------------------------------
+ * load.js
+ */
+
+(function () {
+  iProto.get = function (url) {
+    url = purl(url, this.path);
+    return get(url);
+  };
+
+  var jsed = {};
+  iProto.js = function (url) {
+    url = purl(url, this.path);
+    if (!jsed[url]) {
+      jsed[url] = 1;
+      var code = get(url) + '\n//# sourceURL=' + url;
+      var path = this.path;
+      this.path = url;
+      try {
+        global.eval(code);
+      }
+      finally {
+        this.path = path;
+      }
+    }
+  }
+
+  /** purl(url, rel)  计算相对路径并规格化 */
+  var reUrl = /^(https?:\/\/[\w-.]+(?::\d+)?|)([\w\/.-]+)(.*|)/;
+  var reRel = /^(https?:\/\/[\w-.]+(?::\d+)?|)(\/(?:[\w.-]+\/)*)/;
+
+  function purl(url, rel) {
+    var ms = match(url, reUrl);
+    if (ms && !ms[1] && (rel = match(rel, reRel))) {
+      url = ms[2];
+      if (url[0] !== '/') {
+        url = rel[2] + url;
+      }
+      url = rel[1] + furl(url) + ms[3];
+    }
+    return url;
+  }
+
+  /** furl(url) 路径规格化 */
+  var reSlash = /\/+/;
+
+  function furl(src) {
+    var des = [];
+    src = split(src, reSlash);
+    for (var i = 0, l = src.length; i < l; i++) {
+      var sym = src[i];
+      if (des.length) {
+        if (sym !== '.') {
+          var end = des[des.length - 1];
+          if (sym !== '..') {
+            if (end === '.' && sym) pop(des);
+            push(des, sym);
+          }
+          else if (end === '..') {
+            push(des, sym);
+          }
+          else if (end) {
+            pop(des);
+          }
+        }
+      }
+      else {
+        push(des, sym);
+      }
+    }
+    return des.join('/');
+  }
+})();
+
+
+//#include run.js
+
+module.exports = newI(null, "");
+module.exports.path = module.filename;

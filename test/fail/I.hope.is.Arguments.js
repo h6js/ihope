@@ -22,5 +22,5 @@ I.do('I.hope().is.Arguments :', function (I) {
     I.hope(arguments).is.not.Arguments;
   })();
 
-  I.sum();
+
 });

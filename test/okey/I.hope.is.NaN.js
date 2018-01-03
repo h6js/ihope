@@ -12,5 +12,5 @@ I.do('I.hope.NaN :', function (I) {
   I.hope(Symbol()).is.not.NaN;
   I.hope({}).is.not.NaN;
 
-  I.sum();
+
 });

@@ -10,7 +10,7 @@ I.do('I.hope.is.a.boolean :', function (I) {
   I.hope(function () { }).is.a.boolean;
   I.hope(new Boolean).is.a.boolean;
 
-  I.sum();
+
 });
 
 I.do('I.hope.is.a.Boolean :', function (I) {
@@ -37,5 +37,5 @@ I.do('I.hope.is.a.Boolean :', function (I) {
     I.hope(arguments).is.a.Boolean;
   })();
 
-  I.sum();
+
 });

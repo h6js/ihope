@@ -12,5 +12,5 @@ I.do('I.hope.NaN :', function (I) {
   I.hope(Symbol()).is.NaN;
   I.hope({}).is.NaN;
 
-  I.sum();
+
 });

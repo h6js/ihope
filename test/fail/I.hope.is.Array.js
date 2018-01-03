@@ -22,5 +22,5 @@ I.do('I.hope().is.Array :', function (I) {
     I.hope(arguments).is.Array;
   })();
 
-  I.sum();
+
 });

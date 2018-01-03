@@ -125,6 +125,6 @@ I.do('.deep.equal() asserts:', function (I) {
   I.hope(/abc/i).not.deep.equal(/abc/i);
   I.hope(/abc/g).deep.equal(/ABC/);
   
-  I.sum();
+
 });
 

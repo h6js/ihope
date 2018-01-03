@@ -12,7 +12,6 @@ I.do('I.do() for callback :', function (I) {
     setTimeout(function(text){
       I.do('on success:', function(I){
         I.hope(text).is.equal('hello');
-        I.sum();
       });
     }, 100, 'hello');
 
@@ -21,7 +20,6 @@ I.do('I.do() for callback :', function (I) {
     }, 50);
   });
 
-  I.sum();
 });
 
 I.do('I.do() for promise :', function(I) {
@@ -41,7 +39,7 @@ I.do('I.do() for promise :', function(I) {
       done(Error('promise error.'));
       I.do('then test again:', function(I){
         I.hope(arg).is.not.equal('hello promise');
-        I.sum();
+
       });
     })
     .catch(function(err){
@@ -49,6 +47,6 @@ I.do('I.do() for promise :', function(I) {
     });
   });
 
-  I.sum();
+
 });
 

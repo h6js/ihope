@@ -13,5 +13,5 @@ I.do('I.hope.null :', function (I) {
   I.hope({}).is.not.null;
   I.hope(function () { }).is.not.null;
 
-  I.sum();
+
 });

@@ -13,5 +13,5 @@ I.do('I.hope().has.property() :', function (I) {
   I.hope(123).has.property('any');
   I.hope(123).has.no.property('any');
 
-  I.sum();
+
 });

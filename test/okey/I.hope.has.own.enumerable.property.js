@@ -10,5 +10,5 @@ I.do('I.hope().has.own.enumerable.property() :', function (I) {
   I.hope(worker).has.own.enumerable.property('salary');
   I.hope(worker).has.no.own.enumerable.property('age');
 
-  I.sum();
+
 });

@@ -22,5 +22,5 @@ I.do('I.hope().is.Date :', function (I) {
     I.hope(arguments).is.not.Date;
   })();
 
-  I.sum();
+
 });

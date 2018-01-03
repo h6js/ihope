@@ -88,6 +88,6 @@ I.do('I.hope().strict.equal() :', function (I) {
   I.hope({}).strict.equal({});
   I.hope(function () { }).strict.equal(function () { });
 
-  I.sum();
+
 });
 

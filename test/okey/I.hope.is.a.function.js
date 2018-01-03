@@ -9,7 +9,7 @@ I.do('I.hope.is.a.function :', function (I) {
   I.hope({}).is.not.a.function;
   I.hope(function () { }).is.a.function;
 
-  I.sum();
+
 });
 
 I.do('I.hope.a.Function :', function (I) {
@@ -36,5 +36,5 @@ I.do('I.hope.a.Function :', function (I) {
     I.hope(arguments).is.not.a.Function;
   })();
 
-  I.sum();
+
 });

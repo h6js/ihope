@@ -12,5 +12,5 @@ I.do('I.hope.ok :', function (I) {
   I.hope(NaN).is.not.ok;
   I.hope('').is.not.ok;
 
-  I.sum();
+
 });

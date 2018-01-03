@@ -13,5 +13,5 @@ I.do('I.hope.void :', function (I) {
   I.hope({}).is.not.void;
   I.hope(function () { }).is.not.void;
 
-  I.sum();
+
 });

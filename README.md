@@ -15,7 +15,7 @@ npm install ihope
 ```
 使用：
 ```js
-var I = require('ihope');
+require('ihope');
 
 I.do('My First Test', function(I){
   // 测试代码：

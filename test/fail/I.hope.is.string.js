@@ -10,7 +10,7 @@ I.do('I.hope.is.string :', function (I) {
   I.hope(function () { }).is.string;
   I.hope(new String).is.string;
 
-  I.sum();
+
 });
 
 I.do('I.hope.String :', function (I) {
@@ -37,5 +37,5 @@ I.do('I.hope.String :', function (I) {
     I.hope(arguments).is.String;
   })();
 
-  I.sum();
+
 });

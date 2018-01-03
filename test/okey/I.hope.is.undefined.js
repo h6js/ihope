@@ -16,5 +16,5 @@ I.do('I.hope.undefined :', function (I) {
   I.hope(function () { }).is.not.undefined;
   I.hope(initialized_variable).is.not.undefined;
 
-  I.sum();
+
 });

@@ -10,6 +10,6 @@ I.do('I.hope().has.enumerable.property() :', function (I) {
   I.hope(worker).has.enumerable.property('salary');
   I.hope(worker).has.no.enumerable.property('age');
 
-  I.sum();
+
 });
 

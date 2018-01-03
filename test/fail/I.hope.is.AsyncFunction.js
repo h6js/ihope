@@ -4,5 +4,5 @@ I.do('I.hope().is.AsyncFunction :', function (I) {
   I.hope(function* () { }).is.AsyncFunction;
   I.hope(async function () { }).is.not.AsyncFunction;
 
-  I.sum();
+
 });

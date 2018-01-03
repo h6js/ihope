@@ -1,6 +1,6 @@
 {
   "name": "ihope",
-  "version": "0.0.10",
+  "version": "0.1.2",
   "description": "JavaScript Testing Libaray",
   "keywords": [
     "ihope",
@@ -20,9 +20,11 @@
     "bin/it"
   ],
   "devDependencies": {
+    "macrojs": "0.0.x",
     "uglify-js": "^3.1.0"
   },
   "scripts": {
-    "prepublish": "node build/pack.js"
+    "build": "mjc src/ihope.js dist/ihope.js && mjc src/it.js bin/it",
+    "prepublish": "npm run build"
   }
 }

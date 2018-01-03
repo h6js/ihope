@@ -12,7 +12,7 @@ I.do('I.do() for callback :', function (I) {
     setTimeout(function(text){
       I.do('on success:', function(I){
         I.hope(text).is.equal('hello');
-        I.sum();
+
       });
     }, 50, 'hello');
 
@@ -21,7 +21,7 @@ I.do('I.do() for callback :', function (I) {
     }, 100);
   });
 
-  I.sum();
+
 });
 
 I.do('I.do() for promise :', function(I) {
@@ -40,7 +40,7 @@ I.do('I.do() for promise :', function(I) {
     .then(function (arg) {
       I.do('then test again:', function(I){
         I.hope(arg).is.equal('hello promise');
-        I.sum();
+
       });
     })
     .catch(function(err){
@@ -48,6 +48,6 @@ I.do('I.do() for promise :', function(I) {
     });
   });
 
-  I.sum();
+
 });
 

@@ -25,5 +25,5 @@ I.do('I.hope().is.an.instance.of() :', function (I) {
   I.hope(boy).is.not.an.instance.of(Girl);
   I.hope(girl).is.an.instance.of(Girl);
 
-  I.sum();
+
 });

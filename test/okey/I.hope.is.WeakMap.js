@@ -22,5 +22,5 @@ I.do('I.hope.WeakMap :', function (I) {
     I.hope(arguments).is.not.WeakMap;
   })();
 
-  I.sum();
+
 });

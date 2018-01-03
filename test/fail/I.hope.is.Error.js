@@ -23,5 +23,5 @@ I.do('I.hope().is.Error :', function (I) {
     I.hope(arguments).is.Error;
   })();
 
-  I.sum();
+
 });

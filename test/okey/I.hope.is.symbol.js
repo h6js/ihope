@@ -9,6 +9,6 @@ I.do('I.hope.is.symbol :', function (I) {
   I.hope({}).is.not.symbol;
   I.hope(function () { }).is.not.symbol;
 
-  I.sum();
+
 });
 

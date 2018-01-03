@@ -4,5 +4,5 @@ I.do('I.hope().is.GeneratorFunction :', function (I) {
   I.hope(function* () { }).is.GeneratorFunction;
   I.hope(async function () { }).is.not.GeneratorFunction;
 
-  I.sum();
+
 });

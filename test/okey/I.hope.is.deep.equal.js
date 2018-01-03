@@ -118,6 +118,6 @@ I.do('I.hope().is.deep.equal() asserts:', function (I) {
   I.hope(/abc/i).is.deep.equal(/abc/i);
   I.hope(/abc/g).is.not.deep.equal(/ABC/);
   
-  I.sum();
+
 });
 

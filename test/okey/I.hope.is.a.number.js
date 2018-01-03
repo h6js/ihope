@@ -12,7 +12,7 @@ I.do('I.hope.is.a.number :', function (I) {
   I.hope(function () { }).is.not.a.number;
   I.hope(new Number).is.not.a.number;
 
-  I.sum();
+
 });
 
 I.do('I.hope.a.Number :', function (I) {
@@ -41,5 +41,5 @@ I.do('I.hope.a.Number :', function (I) {
     I.hope(arguments).is.not.a.Number;
   })();
 
-  I.sum();
+
 });

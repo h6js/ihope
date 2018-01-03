@@ -22,5 +22,5 @@ I.do('I.hope.a.WeakSet :', function (I) {
     I.hope(arguments).is.a.WeakSet;
   })();
 
-  I.sum();
+
 });
