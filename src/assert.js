@@ -1,8 +1,9 @@
-//#include trace.js
+//#include ./trace.js
 
 /** -----------------------------------------------------------------------------------------------
  * assert.js
  */
+const EPSILON = 0.0000001192092896;
 
 function assert(assert) {
   var it = newIt(this);
@@ -358,9 +359,9 @@ function funcname(any) {
     any.name || '[anonymous]' : '';
 }
 
-function normalEqual(a, b) { return a == b }
+function normalEqual(a, b) { return a == b || typeof a === "number" && typeof b === "number" && EPSILON >= a-b && a-b>=-EPSILON }
 
-function strictEqual(a, b) { return a === b }
+function strictEqual(a, b) { return a === b || typeof a === "number" && typeof b === "number" && EPSILON >= a-b && a-b>=-EPSILON }
 
 function textify(any) {
   var s = typeclass(any);
@@ -391,12 +392,8 @@ function diff(a, b, equal) {
         if (!equal(aValue, bValue))
           return ': one is ' + aValue + ', the other is ' + bValue + '.';
       }
-      var aKeys = [], bKeys = [], i, length;
-      i = 0;
-      for (aKeys[i++] in a);
-      length = i;
-      i = 0;
-      for (bKeys[i++] in b);
+      var aKeys = Object.keys(a), bKeys = Object.keys(b);
+      var i = aKeys.length, length = bKeys.length;
       if (i > length)
         length = i;
       aKeys.sort();

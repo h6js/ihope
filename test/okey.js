@@ -1,67 +1,67 @@
-I.js('./okey/I.assert.js');
-I.js('./okey/I.do.js');
-I.js('./okey/I.get.js');
-I.js('./okey/I.hope.deep.equal.js');
-I.js('./okey/I.hope.deep.strict.equal.js');
-I.js('./okey/I.hope.equal.js');
-I.js('./okey/I.hope.has.enumerable.property.js');
-I.js('./okey/I.hope.has.own.enumerable.property.js');
-I.js('./okey/I.hope.has.own.property.js');
-I.js('./okey/I.hope.has.property.js');
-I.js('./okey/I.hope.is.Arguments.js');
-I.js('./okey/I.hope.is.Array.js');
-I.js('./okey/I.hope.is.AsyncFunction.js');
-I.js('./okey/I.hope.is.Date.js');
-I.js('./okey/I.hope.is.Error.js');
-I.js('./okey/I.hope.is.Generator.js');
-I.js('./okey/I.hope.is.GeneratorFunction.js');
-I.js('./okey/I.hope.is.Iterator.js');
-I.js('./okey/I.hope.is.Map.js');
-I.js('./okey/I.hope.is.NaN.js');
-I.js('./okey/I.hope.is.Promise.js');
-I.js('./okey/I.hope.is.RegExp.js');
-I.js('./okey/I.hope.is.Set.js');
-I.js('./okey/I.hope.is.WeakMap.js');
-I.js('./okey/I.hope.is.WeakSet.js');
-I.js('./okey/I.hope.is.a.Date.js');
-I.js('./okey/I.hope.is.a.Generator.js');
-I.js('./okey/I.hope.is.a.GeneratorFunction.js');
-I.js('./okey/I.hope.is.a.Map.js');
-I.js('./okey/I.hope.is.a.Promise.js');
-I.js('./okey/I.hope.is.a.RegExp.js');
-I.js('./okey/I.hope.is.a.Set.js');
-I.js('./okey/I.hope.is.a.WeakMap.js');
-I.js('./okey/I.hope.is.a.WeakSet.js');
-I.js('./okey/I.hope.is.a.boolean.js');
-I.js('./okey/I.hope.is.a.function.js');
-I.js('./okey/I.hope.is.a.number.js');
-I.js('./okey/I.hope.is.a.string.js');
-I.js('./okey/I.hope.is.a.symbol.js');
-I.js('./okey/I.hope.is.an.Arguments.js');
-I.js('./okey/I.hope.is.an.Array.js');
-I.js('./okey/I.hope.is.an.AsyncFunction.js');
-I.js('./okey/I.hope.is.an.Error.js');
-I.js('./okey/I.hope.is.an.Iterator.js');
-I.js('./okey/I.hope.is.an.instance.of.js');
-I.js('./okey/I.hope.is.an.object.js');
-I.js('./okey/I.hope.is.boolean.js');
-I.js('./okey/I.hope.is.deep.equal.js');
-I.js('./okey/I.hope.is.deep.strict.equal.js');
-I.js('./okey/I.hope.is.equal.js');
-I.js('./okey/I.hope.is.finite.js');
-I.js('./okey/I.hope.is.function.js');
-I.js('./okey/I.hope.is.instance.of.js');
-I.js('./okey/I.hope.is.null.js');
-I.js('./okey/I.hope.is.number.js');
-I.js('./okey/I.hope.is.object.js');
-I.js('./okey/I.hope.is.ok.js');
-I.js('./okey/I.hope.is.strict.equal.js');
-I.js('./okey/I.hope.is.string.js');
-I.js('./okey/I.hope.is.symbol.js');
-I.js('./okey/I.hope.is.undefined.js');
-I.js('./okey/I.hope.is.void.js');
-I.js('./okey/I.hope.strict.equal.js');
-I.js('./okey/I.hope.throw.js');
-I.js('./okey/I.say.as.js');
-I.js('./okey/I.say.if.js');
-I.js('./okey/I.say.on.js');
+//#include ./okey/I.assert.js
+//#include ./okey/I.do.js
+//#include ./okey/I.get.js
+//#include ./okey/I.hope.deep.equal.js
+//#include ./okey/I.hope.deep.strict.equal.js
+//#include ./okey/I.hope.equal.js
+//#include ./okey/I.hope.has.enumerable.property.js
+//#include ./okey/I.hope.has.own.enumerable.property.js
+//#include ./okey/I.hope.has.own.property.js
+//#include ./okey/I.hope.has.property.js
+//#include ./okey/I.hope.is.Arguments.js
+//#include ./okey/I.hope.is.Array.js
+//#include ./okey/I.hope.is.AsyncFunction.js
+//#include ./okey/I.hope.is.Date.js
+//#include ./okey/I.hope.is.Error.js
+//#include ./okey/I.hope.is.Generator.js
+//#include ./okey/I.hope.is.GeneratorFunction.js
+//#include ./okey/I.hope.is.Iterator.js
+//#include ./okey/I.hope.is.Map.js
+//#include ./okey/I.hope.is.NaN.js
+//#include ./okey/I.hope.is.Promise.js
+//#include ./okey/I.hope.is.RegExp.js
+//#include ./okey/I.hope.is.Set.js
+//#include ./okey/I.hope.is.WeakMap.js
+//#include ./okey/I.hope.is.WeakSet.js
+//#include ./okey/I.hope.is.a.Date.js
+//#include ./okey/I.hope.is.a.Generator.js
+//#include ./okey/I.hope.is.a.GeneratorFunction.js
+//#include ./okey/I.hope.is.a.Map.js
+//#include ./okey/I.hope.is.a.Promise.js
+//#include ./okey/I.hope.is.a.RegExp.js
+//#include ./okey/I.hope.is.a.Set.js
+//#include ./okey/I.hope.is.a.WeakMap.js
+//#include ./okey/I.hope.is.a.WeakSet.js
+//#include ./okey/I.hope.is.a.boolean.js
+//#include ./okey/I.hope.is.a.function.js
+//#include ./okey/I.hope.is.a.number.js
+//#include ./okey/I.hope.is.a.string.js
+//#include ./okey/I.hope.is.a.symbol.js
+//#include ./okey/I.hope.is.an.Arguments.js
+//#include ./okey/I.hope.is.an.Array.js
+//#include ./okey/I.hope.is.an.AsyncFunction.js
+//#include ./okey/I.hope.is.an.Error.js
+//#include ./okey/I.hope.is.an.Iterator.js
+//#include ./okey/I.hope.is.an.instance.of.js
+//#include ./okey/I.hope.is.an.object.js
+//#include ./okey/I.hope.is.boolean.js
+//#include ./okey/I.hope.is.deep.equal.js
+//#include ./okey/I.hope.is.deep.strict.equal.js
+//#include ./okey/I.hope.is.equal.js
+//#include ./okey/I.hope.is.finite.js
+//#include ./okey/I.hope.is.function.js
+//#include ./okey/I.hope.is.instance.of.js
+//#include ./okey/I.hope.is.null.js
+//#include ./okey/I.hope.is.number.js
+//#include ./okey/I.hope.is.object.js
+//#include ./okey/I.hope.is.ok.js
+//#include ./okey/I.hope.is.strict.equal.js
+//#include ./okey/I.hope.is.string.js
+//#include ./okey/I.hope.is.symbol.js
+//#include ./okey/I.hope.is.undefined.js
+//#include ./okey/I.hope.is.void.js
+//#include ./okey/I.hope.strict.equal.js
+//#include ./okey/I.hope.throw.js
+//#include ./okey/I.say.as.js
+//#include ./okey/I.say.if.js
+//#include ./okey/I.say.on.js

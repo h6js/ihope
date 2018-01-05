@@ -1,6 +1,6 @@
-//#include i.js
-//#include load.js
-//#include run.js
+//#include ./i.js
+//#include ./load.js
+//#include ./run.js
 
 /** -----------------------------------------------------------------------------------------------
  * main.js

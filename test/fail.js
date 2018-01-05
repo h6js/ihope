@@ -1,66 +1,66 @@
-I.js('./fail/I.assert.js');
-I.js('./fail/I.do.js');
-I.js('./fail/I.hope.deep.equal.js');
-I.js('./fail/I.hope.deep.strict.equal.js');
-I.js('./fail/I.hope.equal.js');
-I.js('./fail/I.hope.has.enumerable.property.js');
-I.js('./fail/I.hope.has.own.enumerable.property.js');
-I.js('./fail/I.hope.has.own.property.js');
-I.js('./fail/I.hope.has.property.js');
-I.js('./fail/I.hope.is.Arguments.js');
-I.js('./fail/I.hope.is.Array.js');
-I.js('./fail/I.hope.is.AsyncFunction.js');
-I.js('./fail/I.hope.is.Date.js');
-I.js('./fail/I.hope.is.Error.js');
-I.js('./fail/I.hope.is.Generator.js');
-I.js('./fail/I.hope.is.GeneratorFunction.js');
-I.js('./fail/I.hope.is.Iterator.js');
-I.js('./fail/I.hope.is.Map.js');
-I.js('./fail/I.hope.is.NaN.js');
-I.js('./fail/I.hope.is.Promise.js');
-I.js('./fail/I.hope.is.RegExp.js');
-I.js('./fail/I.hope.is.Set.js');
-I.js('./fail/I.hope.is.WeakMap.js');
-I.js('./fail/I.hope.is.WeakSet.js');
-I.js('./fail/I.hope.is.a.Date.js');
-I.js('./fail/I.hope.is.a.Generator.js');
-I.js('./fail/I.hope.is.a.GeneratorFunction.js');
-I.js('./fail/I.hope.is.a.Map.js');
-I.js('./fail/I.hope.is.a.Promise.js');
-I.js('./fail/I.hope.is.a.RegExp.js');
-I.js('./fail/I.hope.is.a.Set.js');
-I.js('./fail/I.hope.is.a.WeakMap.js');
-I.js('./fail/I.hope.is.a.WeakSet.js');
-I.js('./fail/I.hope.is.a.boolean.js');
-I.js('./fail/I.hope.is.a.function.js');
-I.js('./fail/I.hope.is.a.number.js');
-I.js('./fail/I.hope.is.a.string.js');
-I.js('./fail/I.hope.is.a.symbol.js');
-I.js('./fail/I.hope.is.an.Arguments.js');
-I.js('./fail/I.hope.is.an.Array.js');
-I.js('./fail/I.hope.is.an.AsyncFunction.js');
-I.js('./fail/I.hope.is.an.Error.js');
-I.js('./fail/I.hope.is.an.Iterator.js');
-I.js('./fail/I.hope.is.an.instance.of.js');
-I.js('./fail/I.hope.is.an.object.js');
-I.js('./fail/I.hope.is.boolean.js');
-I.js('./fail/I.hope.is.deep.equal.js');
-I.js('./fail/I.hope.is.deep.strict.equal.js');
-I.js('./fail/I.hope.is.equal.js');
-I.js('./fail/I.hope.is.finite.js');
-I.js('./fail/I.hope.is.function.js');
-I.js('./fail/I.hope.is.instance.of.js');
-I.js('./fail/I.hope.is.null.js');
-I.js('./fail/I.hope.is.number.js');
-I.js('./fail/I.hope.is.object.js');
-I.js('./fail/I.hope.is.ok.js');
-I.js('./fail/I.hope.is.strict.equal.js');
-I.js('./fail/I.hope.is.string.js');
-I.js('./fail/I.hope.is.symbol.js');
-I.js('./fail/I.hope.is.undefined.js');
-I.js('./fail/I.hope.is.void.js');
-I.js('./fail/I.hope.strict.equal.js');
-I.js('./fail/I.hope.throw.js');
-I.js('./fail/I.say.as.js');
-I.js('./fail/I.say.if.js');
-I.js('./fail/I.say.on.js');
+//#include ./fail/I.assert.js
+//#include ./fail/I.do.js
+//#include ./fail/I.hope.deep.equal.js
+//#include ./fail/I.hope.deep.strict.equal.js
+//#include ./fail/I.hope.equal.js
+//#include ./fail/I.hope.has.enumerable.property.js
+//#include ./fail/I.hope.has.own.enumerable.property.js
+//#include ./fail/I.hope.has.own.property.js
+//#include ./fail/I.hope.has.property.js
+//#include ./fail/I.hope.is.Arguments.js
+//#include ./fail/I.hope.is.Array.js
+//#include ./fail/I.hope.is.AsyncFunction.js
+//#include ./fail/I.hope.is.Date.js
+//#include ./fail/I.hope.is.Error.js
+//#include ./fail/I.hope.is.Generator.js
+//#include ./fail/I.hope.is.GeneratorFunction.js
+//#include ./fail/I.hope.is.Iterator.js
+//#include ./fail/I.hope.is.Map.js
+//#include ./fail/I.hope.is.NaN.js
+//#include ./fail/I.hope.is.Promise.js
+//#include ./fail/I.hope.is.RegExp.js
+//#include ./fail/I.hope.is.Set.js
+//#include ./fail/I.hope.is.WeakMap.js
+//#include ./fail/I.hope.is.WeakSet.js
+//#include ./fail/I.hope.is.a.Date.js
+//#include ./fail/I.hope.is.a.Generator.js
+//#include ./fail/I.hope.is.a.GeneratorFunction.js
+//#include ./fail/I.hope.is.a.Map.js
+//#include ./fail/I.hope.is.a.Promise.js
+//#include ./fail/I.hope.is.a.RegExp.js
+//#include ./fail/I.hope.is.a.Set.js
+//#include ./fail/I.hope.is.a.WeakMap.js
+//#include ./fail/I.hope.is.a.WeakSet.js
+//#include ./fail/I.hope.is.a.boolean.js
+//#include ./fail/I.hope.is.a.function.js
+//#include ./fail/I.hope.is.a.number.js
+//#include ./fail/I.hope.is.a.string.js
+//#include ./fail/I.hope.is.a.symbol.js
+//#include ./fail/I.hope.is.an.Arguments.js
+//#include ./fail/I.hope.is.an.Array.js
+//#include ./fail/I.hope.is.an.AsyncFunction.js
+//#include ./fail/I.hope.is.an.Error.js
+//#include ./fail/I.hope.is.an.Iterator.js
+//#include ./fail/I.hope.is.an.instance.of.js
+//#include ./fail/I.hope.is.an.object.js
+//#include ./fail/I.hope.is.boolean.js
+//#include ./fail/I.hope.is.deep.equal.js
+//#include ./fail/I.hope.is.deep.strict.equal.js
+//#include ./fail/I.hope.is.equal.js
+//#include ./fail/I.hope.is.finite.js
+//#include ./fail/I.hope.is.function.js
+//#include ./fail/I.hope.is.instance.of.js
+//#include ./fail/I.hope.is.null.js
+//#include ./fail/I.hope.is.number.js
+//#include ./fail/I.hope.is.object.js
+//#include ./fail/I.hope.is.ok.js
+//#include ./fail/I.hope.is.strict.equal.js
+//#include ./fail/I.hope.is.string.js
+//#include ./fail/I.hope.is.symbol.js
+//#include ./fail/I.hope.is.undefined.js
+//#include ./fail/I.hope.is.void.js
+//#include ./fail/I.hope.strict.equal.js
+//#include ./fail/I.hope.throw.js
+//#include ./fail/I.say.as.js
+//#include ./fail/I.say.if.js
+//#include ./fail/I.say.on.js

@@ -1,7 +1,7 @@
-//#include lib.js
-//#include log.js
-//#include assert.js
-//#include run.js
+//#include ./lib.js
+//#include ./log.js
+//#include ./assert.js
+//#include ./run.js
 
 /** -----------------------------------------------------------------------------------------------
  * i.js

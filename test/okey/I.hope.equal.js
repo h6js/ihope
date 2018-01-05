@@ -62,6 +62,8 @@ I.do('I.hope().is.equal() :', function (I) {
   var the_function = function () { };
   I.hope(the_function).equal(the_function);
 
+  I.hope(0.1+0.2).equal(0.3);
+
   I.hope(false).not.equal(undefined);
   I.hope(NaN).not.equal(undefined);
   I.hope(0).not.equal(undefined);
@@ -97,6 +99,7 @@ I.do('I.hope().is.equal() :', function (I) {
   I.hope({}).not.equal({});
   I.hope(function () { }).not.equal(function () { });
 
+  I.hope(0.1+0.2).not.equal(0.300001);
 
 });
 

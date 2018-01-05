@@ -14,6 +14,7 @@ I.do('I.hope().strict.equal() :', function (I) {
   I.hope(the_object).strict.equal(the_object);
   var the_function = function () { };
   I.hope(the_function).strict.equal(the_function);
+  I.hope(0.1+0.2).strict.equal(0.3);
 
 
   I.hope(null).not.strict.equal(undefined);
@@ -88,6 +89,7 @@ I.do('I.hope().strict.equal() :', function (I) {
   I.hope({}).not.strict.equal({});
   I.hope(function () { }).not.strict.equal(function () { });
 
+  I.hope(0.1+0.2).not.strict.equal(0.300001);
 
 });
 

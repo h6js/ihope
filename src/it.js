@@ -9,8 +9,8 @@
  (function (global, window, Function, Object, String, Array, RegExp, Date, Error, Promise) {
   global = this; window = global.window;
 
-  //#include main.js
-  //#include server.js
+  //#include ./main.js
+  //#include ./server.js
 
   global.I = newI(null, "");  // 创建全局的 I，共测试程序使用
 
@@ -49,8 +49,11 @@
       const cwd = process.cwd();
       for (var i = 0; i < argv.length; i++) {
         var file = I.path = path.resolve(cwd, argv[i]);
-        var code = fs.readFileSync(file, { codding: "utf-8" });
+        // var code = fs.readFileSync(file, { codding: "utf-8" });
+        var code = macro(file);
         code += "\n//# sourceURL=" + file;
+        cachedRows[file] = code.split("\n");
+        // log("#t%s", file);
         global.eval(code);
       }
       process.nextTick(main);

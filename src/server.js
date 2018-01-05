@@ -1,3 +1,5 @@
+//#include macrojs
+
 /** -------------------------------------------------------------------------------------------------------------------
  * server.js
  */
@@ -6,7 +8,7 @@ function Server(agent, page, jses) {
   var http = require("http");
   var fs = require("fs");
   var path = require("path");
-  var cwd = process.cwd();
+  var cwd = process.cwd()+"/";
 
   var mime = {
     ".js": "text/javascript; charset=utf-8",
@@ -41,7 +43,7 @@ function Server(agent, page, jses) {
 
   var agent = agents[agent] || "open ";
 
-  var command = agent + "http://localhost:" + server.address().port + "/" + page + "?js=" + jses.join(",");
+  var command = agent + "http://localhost:8080/" + page + "?js=" + jses.join(",");
   const exec = require("child_process").exec;
   exec(command);
 
@@ -70,7 +72,13 @@ function Server(agent, page, jses) {
         var type = mime[path.extname(url)];
         if (type)
           res.setHeader("Content-Type", type);
-        res.write(fs.readFileSync(url));
+        if(url.endsWith(".js")) {
+          segs = macro("./"+url, cwd);
+        }
+        else {
+          segs = fs.readFileSync(url);
+        }
+        res.write(segs);
         res.end();
       }
       else {
@@ -91,7 +99,7 @@ function Server(agent, page, jses) {
             segs = qry.split(",");
             for (var i = 0; i < segs.length; i++) {
               url = segs[i];
-              res.write('<\script src="/' + url + '"><\/script>');
+              res.write('<\script src="' + url + '"><\/script>');
             }
           }
         }
