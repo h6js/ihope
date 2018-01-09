@@ -21,7 +21,7 @@ else {
 }
 
 var reWhere = RegExp('\\b' + where.name + '\\b');
-var reHere = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./-]+(?:\?.*|)):(\d+):(\d+)/;
+var reHere = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./@-]+(?:\?.*|)):(\d+):(\d+)/;
 function where(deep) {
   var stack = split(Error().stack, "\n");
   for (var i = 0, line; line = stack[i++];) {
@@ -39,7 +39,7 @@ function where(deep) {
   }
 }
 
-var reTrace = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./-]+(?:\?.*|)):(\d+):(\d+)/;
+var reTrace = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./@-]+(?:\?.*|)):(\d+):(\d+)/;
 function getTrace(error) {
   var stack = error.stack;
   if (stack) {

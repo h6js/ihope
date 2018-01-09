@@ -9,14 +9,7 @@
 async function main() {
   try {
     await I.run();
-    var errs = errors(I);
-    if(errs) {
-      log("#eTOTAL ERRORS: %d !", errs)
-    }
-    else {
-      log("#sALL SUCCESSFUL!")
-    }
-    exit(errs);
+    exit(errors(I));
   }
   catch (e) {
     log("#eUncaught %s: %s", e.name, e.message);

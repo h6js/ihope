@@ -127,24 +127,6 @@ function isFunction(any) {
 
 
 /** -----------------------------------------------------------------------------------------------
- * remote.js
- */
-
-function remote(oper, value){
-  var xhr = new XMLHttpRequest;
-  var url = location.protocol + "//" + location.host + "//";
-
-  remote = function (oper, value) {
-    xhr.open("GET", url, false);
-    xhr.setRequestHeader("oper", oper);
-    xhr.setRequestHeader("value", encodeURIComponent(value));
-    xhr.send();
-  }
-  return remote(oper, value);
-};
-
-
-/** -----------------------------------------------------------------------------------------------
  * log.js
  */
 
@@ -179,14 +161,6 @@ function log() {
   print(format.apply(undefined, arguments));
 }
 
-const print = this.window
-  ? function (s) {
-    remote("log", textcolor(s))
-    console.log.apply(console, argscolor(arguments));
-  }
-  : function (s) {
-    console.log(textcolor(s));
-  };
 
 const textcolors = {
   0: "\x1b[0m",
@@ -199,7 +173,7 @@ const textcolors = {
 };
 
 function textcolor(text) {
-  return replace(text, /#\w/g, (s)=>textcolors[s[1]]||textcolors[0])+textcolors[0];
+  return replace(text, /#\w/g, (s) => textcolors[s[1]] || textcolors[0]) + textcolors[0];
 }
 
 const argscolors = {
@@ -213,16 +187,16 @@ const argscolors = {
 };
 
 function argscolor(args) {
-  var i=1;
-  args[0] = replace(args[0], /#\w/g, (s)=>(args[i++]=argscolors[s[1]] || "" ,"%c"));
+  var i = 1;
+  args[0] = replace(args[0], /#\w/g, (s) => (args[i++] = argscolors[s[1]] || "", "%c"));
   args.length = i;
   return args;
 }
 
 function format(s) {
-  var i=1, args = arguments;
-  return replace(s, /%[sd]/g, function(s){
-    return i<args.length ? args[i++] : s;
+  var i = 1, args = arguments;
+  return replace(s, /%[sd]/g, function (s) {
+    return i < args.length ? args[i++] : s;
   });
 }
 
@@ -249,7 +223,7 @@ else {
 }
 
 var reWhere = RegExp('\\b' + where.name + '\\b');
-var reHere = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./-]+(?:\?.*|)):(\d+):(\d+)/;
+var reHere = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./@-]+(?:\?.*|)):(\d+):(\d+)/;
 function where(deep) {
   var stack = split(Error().stack, "\n");
   for (var i = 0, line; line = stack[i++];) {
@@ -267,7 +241,7 @@ function where(deep) {
   }
 }
 
-var reTrace = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./-]+(?:\?.*|)):(\d+):(\d+)/;
+var reTrace = /((?:https?:\/\/[\w.-]+(?::\d+)?|)[\w./@-]+(?:\?.*|)):(\d+):(\d+)/;
 function getTrace(error) {
   var stack = error.stack;
   if (stack) {
@@ -858,7 +832,7 @@ async function run() {
     var us = me.us;
     for (var i = 0; i < us.length; i++)
       await us[i].run();
-    sum(me);
+    summarize(me);
   }
   catch (err) {
     var s;
@@ -878,9 +852,31 @@ async function run() {
   }
 }
 
+function summarize(me) {
+  var s = sum(me);
+  var total = s.total, okey = s.okey, fail = s.fail, miss = s.miss;
+  s = format("#t✈#i Total asserts: #t%d#i,", total);
+  if (okey) {
+    s += format(' okey: #s%d%s#i,', okey, rate(okey));
+  }
+  if (fail) {
+    s += format(' fail: #f%d%s#i,', fail, rate(fail));
+  }
+  if (miss) {
+    s += format(' miss: #t%d%s#i,', miss, rate(miss));
+  }
+
+  s += format(" duration: #t%d#ims.", now() - me.zero);
+  print(indent(s, me.indent));
+
+  function rate(value) {
+    return Number.isInteger(value = value / total * 100) ? '(' + value + '%)' : '';
+  }
+}
+
 function sum(me) {
-  var its = me.its, s;
-  for (var total = its.length, okey = 0, fail = 0, miss = 0, i = 0; i < total; i++) {
+  var its = me.its, total = its.length, okey = 0, fail = 0, miss = 0;
+  for (var i = 0; i < total; i++) {
     var it = its[i];
     if (it.end) {
       if (it.fail) {
@@ -894,26 +890,15 @@ function sum(me) {
       miss++;
     }
   }
-  s = "#t✈#i Total";
-  if (total) {
-    s += format(" asserts: #t%d#i,", total);
-    if (okey) {
-      s += format(' okey: #s%d%s#i,', okey, rate(okey));
-    }
-    if (fail) {
-      s += format(' fail: #f%d%s#i,', fail, rate(fail));
-    }
-    if (miss) {
-      s += format(' miss: #t%d%s#i,', miss, rate(miss));
-    }
+  its = me.us;
+  for(var i=0; i<its.length; i++) {
+    me = sum(its[i]);
+    total += me.total;
+    okey += me.okey;
+    fail += me.fail;
+    miss += me.miss;
   }
-
-  s += format(" duration: #t%d#ims.", now() - me.zero);
-  print(indent(s, me.indent));
-
-  function rate(value) {
-    return Number.isInteger(value = value / total * 100) ? '(' + value + '%)' : '';
-  }
+  return {total, okey, fail, miss};
 }
 
 function errors(me) {
@@ -928,7 +913,7 @@ function errors(me) {
       errs++;
     }
   }
-  for(var i=0; i<us.length; i++)
+  for (var i = 0; i < us.length; i++)
     errs += errors(us[i]);
   return errs;
 } 

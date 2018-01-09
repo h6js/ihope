@@ -1,69 +1,66 @@
-#!/usr/bin/env node
-
 /** -------------------------------------------------------------------------------------------------------------------
  * it.js
- *  Usage:
- *    it [-<agent>] [page.html] test.js [ ... tests.js]
  */
 
- (function (global, window, Function, Object, String, Array, RegExp, Date, Error, Promise) {
+(function (global, window, Function, Object, String, Array, RegExp, Date, Error, Promise) {
   global = this; window = global.window;
+  const currentScript = document.currentScript;
+  const cases = currentScript.getAttribute("tests");
+  const debug = currentScript.hasAttribute("debug");
+  if(!debug) document.head.removeChild(currentScript);
 
+  //#define BROWSER = 1
   //#include ./main.js
   //#include ./server.js
 
-  global.I = newI(null, "");  // 创建全局的 I，共测试程序使用
-
-
-  if (global.window) { // 当前运行在浏览器环境中
-    global.addEventListener("load", main);
-    I.path = location.pathname;
-    I.exit = (code) => remote("exit", code);
+  this.onerror = function(message, source, lineno, colno, error) {
+    log("#e%s", message);
   }
-  else {  // 当前运行在 nodejs 环境中
-    var argv = process.argv.slice(2), agent;
 
-    var page = argv[0];
-    if(page[0]==="-") {
-      argv = argv.slice(1);
-      if(!argv.length) help();
-      agent = page.slice(1);
-      page = argv[0];
-    }
+  var I = currentScript.getAttribute("name") || "I";
 
-    if(page.endsWith(".html")) {
-      argv = argv.slice(1);
-      if(!argv.length) help();
-      if(!agent) agent = "default";
-    }
-    else {
-      page = "";
-    }
+  I = global[I] = newI(null, "");  // 创建全局的 I，共测试程序使用
+  I.path = location.pathname;
 
-    if (agent) {  // 服务器远端测试
-      Server(agent, page, argv);
-    }
-    else {   // nodejs 环境中测试
-      const path = require("path");
-      const fs = require("fs");
-      const cwd = process.cwd();
-      for (var i = 0; i < argv.length; i++) {
-        var file = I.path = path.resolve(cwd, argv[i]);
-        // var code = fs.readFileSync(file, { codding: "utf-8" });
-        var code = macro(file);
-        code += "\n//# sourceURL=" + file;
-        cachedRows[file] = code.split("\n");
-        // log("#t%s", file);
-        global.eval(code);
+  global.addEventListener("load", async function () {
+    if (cases)
+      try {
+        var tests = cases.split(",");
+        for (var i = 0; i < tests.length; i++)
+          await execScript(tests[i]);
+        await I.run();
+        var errs = errors(I);
       }
-      process.nextTick(main);
+      catch (e) {
+        log("#eUncaught %s: %s", e.name, e.message);
+        errs = -1;
+      }
+      finally {
+        if (!debug) {
+          server("exit", errs);
+          this.close();
+        }
+      }
+    else {
+      await I.run();
+      var errs = errors(I);
+      if (errs) {
+        log("#eTOTAL ERRORS: %d !", errs)
+      }
+      else {
+        log("#sALL SUCCESSFUL!")
+      }
     }
-  }
 
-  function help() {
-    log("Usage:\n  it [-<agent>] [page.html] test.js [ ... ]\n");
-    process.exit(-1);
+  });
+
+  async function execScript(src) {
+    return new Promise(function (resolve) {
+      var script = document.createElement("script");
+      script.onload = resolve;
+      script.src = src;
+      try { document.head.appendChild(script) }
+      finally { if(!debug) document.head.removeChild(script) }
+    });
   }
-  
-  
 })(0, 0, Function, Object, String, Array, RegExp, Date, Error, Promise);

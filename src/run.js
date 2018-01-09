@@ -70,7 +70,7 @@ async function run() {
     var us = me.us;
     for (var i = 0; i < us.length; i++)
       await us[i].run();
-    sum(me);
+    summarize(me);
   }
   catch (err) {
     var s;
@@ -90,9 +90,31 @@ async function run() {
   }
 }
 
+function summarize(me) {
+  var s = sum(me);
+  var total = s.total, okey = s.okey, fail = s.fail, miss = s.miss;
+  s = format("#t✈#i Total asserts: #t%d#i,", total);
+  if (okey) {
+    s += format(' okey: #s%d%s#i,', okey, rate(okey));
+  }
+  if (fail) {
+    s += format(' fail: #f%d%s#i,', fail, rate(fail));
+  }
+  if (miss) {
+    s += format(' miss: #t%d%s#i,', miss, rate(miss));
+  }
+
+  s += format(" duration: #t%d#ims.", now() - me.zero);
+  print(indent(s, me.indent));
+
+  function rate(value) {
+    return Number.isInteger(value = value / total * 100) ? '(' + value + '%)' : '';
+  }
+}
+
 function sum(me) {
-  var its = me.its, s;
-  for (var total = its.length, okey = 0, fail = 0, miss = 0, i = 0; i < total; i++) {
+  var its = me.its, total = its.length, okey = 0, fail = 0, miss = 0;
+  for (var i = 0; i < total; i++) {
     var it = its[i];
     if (it.end) {
       if (it.fail) {
@@ -106,26 +128,15 @@ function sum(me) {
       miss++;
     }
   }
-  s = "#t✈#i Total";
-  if (total) {
-    s += format(" asserts: #t%d#i,", total);
-    if (okey) {
-      s += format(' okey: #s%d%s#i,', okey, rate(okey));
-    }
-    if (fail) {
-      s += format(' fail: #f%d%s#i,', fail, rate(fail));
-    }
-    if (miss) {
-      s += format(' miss: #t%d%s#i,', miss, rate(miss));
-    }
+  its = me.us;
+  for(var i=0; i<its.length; i++) {
+    me = sum(its[i]);
+    total += me.total;
+    okey += me.okey;
+    fail += me.fail;
+    miss += me.miss;
   }
-
-  s += format(" duration: #t%d#ims.", now() - me.zero);
-  print(indent(s, me.indent));
-
-  function rate(value) {
-    return Number.isInteger(value = value / total * 100) ? '(' + value + '%)' : '';
-  }
+  return {total, okey, fail, miss};
 }
 
 function errors(me) {
@@ -140,7 +151,7 @@ function errors(me) {
       errs++;
     }
   }
-  for(var i=0; i<us.length; i++)
+  for (var i = 0; i < us.length; i++)
     errs += errors(us[i]);
   return errs;
 } 

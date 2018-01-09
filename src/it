@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+
+/** -------------------------------------------------------------------------------------------------------------------
+ * it
+ *  Usage:
+ *    it [-<agent>] [page.html] test.js [ ... tests.js]
+ */
+
+//#define CLI = 1
+
+//#include ./main.js
+var debug = "";
+//#include ./server.js
+
+var argv = process.argv.slice(2), agent, page, tests = [], debug;
+
+for(var i=0, arg; arg = argv[i]; i++) {
+  if(arg === '-debug') {
+    debug = "debug";
+  }
+  else if(arg[0] === '-') {
+    if(agent) help();
+    agent = arg.slice(1);
+  }
+  else if(arg.endsWith(".html")) {
+    if(page) help();
+    page = arg;
+  }
+  else {
+    tests.push(arg);
+  }
+}
+
+if(!tests.length && !page) help();
+
+if (agent || page) {  // 服务器远端测试
+  Server(agent, page, tests);
+}
+else {   // nodejs 环境中测试
+  global.I = newI(null, "");
+  const path = require("path");
+  const fs = require("fs");
+  const cwd = process.cwd();
+  for (var i = 0; i < tests.length; i++) {
+    var test = I.path = path.resolve(cwd, tests[i]);
+    var code = macro(test);
+    code += "\n//# sourceURL=" + test;
+    cachedRows[test] = code.split("\n");
+    global.eval(code);
+  }
+  process.nextTick(main);
+}
+
+function help() {
+  log("JavaScript Test Runner (0.1.11)\n    Usage:  it [-<agent>] [-debug] [page.html] test.js");
+  process.exit(-1);
+}

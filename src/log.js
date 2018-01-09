@@ -1,5 +1,3 @@
-//#include ./remote.js
-
 /** -----------------------------------------------------------------------------------------------
  * log.js
  */
@@ -35,14 +33,20 @@ function log() {
   print(format.apply(undefined, arguments));
 }
 
-const print = this.window
-  ? function (s) {
-    remote("log", textcolor(s))
-    console.log.apply(console, argscolor(arguments));
-  }
-  : function (s) {
-    console.log(textcolor(s));
-  };
+//#if (BROWSER) {
+const server = cases
+  ? Server()
+  : nop;
+function print(s) {
+  server("log", textcolor(s))
+  console.log.apply(console, argscolor(arguments));
+}
+//#}
+//#if (CLI) {
+function print(s) {
+  console.log(textcolor(s));
+}
+//#}
 
 const textcolors = {
   0: "\x1b[0m",
@@ -55,7 +59,7 @@ const textcolors = {
 };
 
 function textcolor(text) {
-  return replace(text, /#\w/g, (s)=>textcolors[s[1]]||textcolors[0])+textcolors[0];
+  return replace(text, /#\w/g, (s) => textcolors[s[1]] || textcolors[0]) + textcolors[0];
 }
 
 const argscolors = {
@@ -69,15 +73,15 @@ const argscolors = {
 };
 
 function argscolor(args) {
-  var i=1;
-  args[0] = replace(args[0], /#\w/g, (s)=>(args[i++]=argscolors[s[1]] || "" ,"%c"));
+  var i = 1;
+  args[0] = replace(args[0], /#\w/g, (s) => (args[i++] = argscolors[s[1]] || "", "%c"));
   args.length = i;
   return args;
 }
 
 function format(s) {
-  var i=1, args = arguments;
-  return replace(s, /%[sd]/g, function(s){
-    return i<args.length ? args[i++] : s;
+  var i = 1, args = arguments;
+  return replace(s, /%[sd]/g, function (s) {
+    return i < args.length ? args[i++] : s;
   });
 }
