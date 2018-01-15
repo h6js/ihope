@@ -38,6 +38,7 @@ if (agent || page) {  // 服务器远端测试
   Server(agent, page, tests);
 }
 else {   // nodejs 环境中测试
+  global.require = require;
   global.I = newI(null, "");
   const path = require("path");
   const fs = require("fs");
@@ -52,7 +53,9 @@ else {   // nodejs 环境中测试
   process.nextTick(main);
 }
 
+//#define PACKAGE @../package.json
+//#define VERSION = JSON.stringify(JSON.parse(JSON.parse(PACKAGE)).version)
 function help() {
-  log("JavaScript Test Runner (0.1.11)\n    Usage:  it [-<agent>] [-debug] [page.html] test.js");
+  log("JavaScript Test Runner ("+VERSION+")\n    Usage:  it [-<agent>] [-debug] [page.html] test.js");
   process.exit(-1);
 }

@@ -1653,6 +1653,7 @@ if (agent || page) {  // 服务器远端测试
   Server(agent, page, tests);
 }
 else {   // nodejs 环境中测试
+  global.require = require;
   global.I = newI(null, "");
   const path = require("path");
   const fs = require("fs");
@@ -1667,7 +1668,9 @@ else {   // nodejs 环境中测试
   process.nextTick(main);
 }
 
+//const PACKAGE = "{\n  \"name\": \"ihope\",\n  \"version\": \"0.1.14\",\n  \"description\": \"JavaScript Testing Libaray\",\n  \"keywords\": [\n    \"ihope\",\n    \"test\"\n  ],\n  \"license\": \"MIT\",\n  \"author\": {\n    \"name\": \"李战(leadzen)\",\n    \"email\": \"leadzen@qq.com\"\n  },\n  \"bin\": {\n    \"it\": \"bin/it\"\n  },\n  \"main\": \"dist/ihope.js\",\n  \"files\": [\n    \"dist/ihope.js\",\n    \"it.js\",\n    \"bin/it\"\n  ],\n  \"devDependencies\": {\n    \"macrojs\": \"^0.1.6\",\n    \"uglify-js\": \"^3.1.0\"\n  },\n  \"scripts\": {\n    \"build\": \"mjc src/ihope.js dist/ihope.js && mjc src/it.js it.js && mjc src/it bin/it\",\n    \"publish\": \"npm run build\"\n  }\n}\n"
+//const VERSION = "0.1.14"
 function help() {
-  log("JavaScript Test Runner (0.1.11)\n    Usage:  it [-<agent>] [-debug] [page.html] test.js");
+  log("JavaScript Test Runner ("+/*VERSION*/"0.1.14"+")\n    Usage:  it [-<agent>] [-debug] [page.html] test.js");
   process.exit(-1);
 }
