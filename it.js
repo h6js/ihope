@@ -188,7 +188,7 @@
   };
   
   function textcolor(text) {
-    return replace(text, /#\w/g, (s) => textcolors[s[1]] || textcolors[0]) + textcolors[0];
+    return replace(text, /#[sftiem]/g, (s) => textcolors[s[1]] || textcolors[0]) + textcolors[0];
   }
   
   const argscolors = {
@@ -1508,8 +1508,8 @@
   }();
   
   
-  return function (path, rel) {
-    return makeFile(path, rel, Object.create(null), Object.create(null), Object.create(null), "");
+  return function (path, base, variables) {
+    return makeFile(path, base, Object.create(null), Object.create(null), variables || Object.create(null), "");
   }
   }();
   

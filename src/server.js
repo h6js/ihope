@@ -82,7 +82,7 @@ function Server(agent, page, tests) {
       res.setHeader("Content-Type", "text/javascript; charset=utf-8");
       return res.end(it);
     }
-    if ( url === "favicon.ico")
+    if (url === "favicon.ico")
       return res.end();
     try {
       var segs = url.split('?');
@@ -92,7 +92,7 @@ function Server(agent, page, tests) {
         if (type)
           res.setHeader("Content-Type", type);
         if (url.endsWith(".js")) {
-          segs = macro("./" + url, cwd);
+          segs = macro("./" + url, cwd, { AGENT: 1 });
         }
         else {
           segs = fs.readFileSync(url);
@@ -114,7 +114,7 @@ function Server(agent, page, tests) {
             var tests = qry.slice(5);
         }
         if (tests) {
-          res.write('<script src="/it.js" tests="'+tests+'" '+debug+'></script>\n');
+          res.write('<script src="/it.js" tests="' + tests + '" ' + debug + '></script>\n');
         }
         if (url)
           res.write(fs.readFileSync(url));

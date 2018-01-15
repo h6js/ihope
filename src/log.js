@@ -59,7 +59,7 @@ const textcolors = {
 };
 
 function textcolor(text) {
-  return replace(text, /#\w/g, (s) => textcolors[s[1]] || textcolors[0]) + textcolors[0];
+  return replace(text, /#[sftiem]/g, (s) => textcolors[s[1]] || textcolors[0]) + textcolors[0];
 }
 
 const argscolors = {

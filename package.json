@@ -1,6 +1,6 @@
 {
   "name": "ihope",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "JavaScript Testing Libaray",
   "keywords": [
     "ihope",
@@ -21,7 +21,7 @@
     "bin/it"
   ],
   "devDependencies": {
-    "macrojs": "^0.1.5",
+    "macrojs": "^0.1.6",
     "uglify-js": "^3.1.0"
   },
   "scripts": {
